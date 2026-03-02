@@ -8,7 +8,10 @@ kotlin {
 
     sourceSets {
         val commonMain by getting {
-            dependencies { implementation(libs.okio) }
+            dependencies {
+                implementation(libs.okio)
+                implementation(libs.kotlinx.datetime)
+            }
         }
         val commonTest by getting
 
@@ -21,6 +24,7 @@ kotlin {
                 implementation(libs.bouncycastle)
                 implementation(libs.logging.interceptor)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
             }
         }
 

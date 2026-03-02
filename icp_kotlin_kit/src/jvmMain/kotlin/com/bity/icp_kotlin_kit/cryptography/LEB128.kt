@@ -3,29 +3,38 @@ package com.bity.icp_kotlin_kit.cryptography
 import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import okio.BufferedSource
 
-internal object LEB128 {
+object LEB128 {
 
-    fun encodeUnsigned(value: Number): ByteArray =
-        when (value::class) {
-            Byte::class -> encodeUnsignedBigInt(ICPBigInteger.valueOf((value as Byte).toLong()))
-            Short::class -> encodeUnsignedBigInt(ICPBigInteger.valueOf((value as Short).toLong()))
-            Int::class -> encodeUnsignedBigInt(ICPBigInteger.valueOf((value as Int).toLong()))
-            Long::class -> encodeUnsignedBigInt(ICPBigInteger.valueOf((value as Long)))
-            ICPBigInteger::class -> encodeUnsignedBigInt(value as ICPBigInteger)
-            else -> throw Exception("Class ${value::class} not supported")
-        }
+    // -----------------------------
+    // UNSIGNED ENCODING
+    // -----------------------------
 
-    fun encodeUnsigned(byte: UByte): ByteArray =
-        encodeUnsigned(byte.toLong())
+    fun encodeUnsigned(value: Byte): ByteArray =
+        encodeUnsignedBigInt(ICPBigInteger.valueOf(value.toLong()))
 
-    fun encodeUnsigned(uShort: UShort): ByteArray =
-        encodeUnsigned(uShort.toLong())
+    fun encodeUnsigned(value: Short): ByteArray =
+        encodeUnsignedBigInt(ICPBigInteger.valueOf(value.toLong()))
 
-    fun encodeUnsigned(uInt: UInt): ByteArray =
-        encodeUnsigned(uInt.toLong())
+    fun encodeUnsigned(value: Int): ByteArray =
+        encodeUnsignedBigInt(ICPBigInteger.valueOf(value.toLong()))
 
-    fun encodeUnsigned(uLong: ULong): ByteArray =
-        encodeUnsigned(uLong.toLong())
+    fun encodeUnsigned(value: Long): ByteArray =
+        encodeUnsignedBigInt(ICPBigInteger.valueOf(value))
+
+    fun encodeUnsigned(value: UByte): ByteArray =
+        encodeUnsigned(value.toLong())
+
+    fun encodeUnsigned(value: UShort): ByteArray =
+        encodeUnsigned(value.toLong())
+
+    fun encodeUnsigned(value: UInt): ByteArray =
+        encodeUnsigned(value.toLong())
+
+    fun encodeUnsigned(value: ULong): ByteArray =
+        encodeUnsigned(value.toLong())
+
+    fun encodeUnsigned(value: ICPBigInteger): ByteArray =
+        encodeUnsignedBigInt(value)
 
     private fun encodeUnsignedBigInt(bigInt: ICPBigInteger): ByteArray {
         var value = bigInt
@@ -46,15 +55,24 @@ internal object LEB128 {
         return bytes.toByteArray()
     }
 
-    fun encodeSigned(value: Number): ByteArray =
-        when (value::class) {
-            Byte::class -> encodeSignedBigInt(ICPBigInteger.valueOf((value as Byte).toLong()))
-            Short::class -> encodeSignedBigInt(ICPBigInteger.valueOf((value as Short).toLong()))
-            Int::class -> encodeSignedBigInt(ICPBigInteger.valueOf((value as Int).toLong()))
-            Long::class -> encodeSignedBigInt(ICPBigInteger.valueOf((value as Long)))
-            ICPBigInteger::class -> encodeSignedBigInt(value as ICPBigInteger)
-            else -> throw Exception("Class ${value::class} not supported")
-        }
+    // -----------------------------
+    // SIGNED ENCODING
+    // -----------------------------
+
+    fun encodeSigned(value: Byte): ByteArray =
+        encodeSignedBigInt(ICPBigInteger.valueOf(value.toLong()))
+
+    fun encodeSigned(value: Short): ByteArray =
+        encodeSignedBigInt(ICPBigInteger.valueOf(value.toLong()))
+
+    fun encodeSigned(value: Int): ByteArray =
+        encodeSignedBigInt(ICPBigInteger.valueOf(value.toLong()))
+
+    fun encodeSigned(value: Long): ByteArray =
+        encodeSignedBigInt(ICPBigInteger.valueOf(value))
+
+    fun encodeSigned(value: ICPBigInteger): ByteArray =
+        encodeSignedBigInt(value)
 
     private fun encodeSignedBigInt(bigInt: ICPBigInteger): ByteArray {
         var value = bigInt
@@ -83,6 +101,10 @@ internal object LEB128 {
         return bytes.toByteArray()
     }
 
+    // -----------------------------
+    // UNSIGNED DECODING
+    // -----------------------------
+
     inline fun <reified T> decodeUnsigned(source: BufferedSource): T {
         var result = ICPBigInteger.valueOf(0)
         var shift = 0
@@ -110,7 +132,11 @@ internal object LEB128 {
         } as T
     }
 
-    inline fun <reified T : Number> decodeSigned(source: BufferedSource): T {
+    // -----------------------------
+    // SIGNED DECODING
+    // -----------------------------
+
+    inline fun <reified T : Any> decodeSigned(source: BufferedSource): T {
         var result = ICPBigInteger.valueOf(0)
         var shift = 0
 

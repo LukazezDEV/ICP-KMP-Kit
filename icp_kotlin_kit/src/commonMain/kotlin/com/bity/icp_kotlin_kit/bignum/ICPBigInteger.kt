@@ -7,10 +7,26 @@ expect class ICPBigInteger {
     fun multiply(other: ICPBigInteger): ICPBigInteger
     fun divide(other: ICPBigInteger): ICPBigInteger
     fun compareTo(other: ICPBigInteger): Int
+
+    fun shiftLeft(n: Int): ICPBigInteger
+    fun shiftRight(n: Int): ICPBigInteger
+    fun and(other: ICPBigInteger): ICPBigInteger
+    fun or(other: ICPBigInteger): ICPBigInteger
+
+    fun toByte(): Byte
+    fun toShort(): Short
+    fun toInt(): Int
+    fun toLong(): Long
+
+    // ⭐ NEW
+    fun toFloat(): Float
+    fun signum(): Int
+
     override fun toString(): String
 
     companion object {
         fun fromByteArray(bytes: ByteArray): ICPBigInteger
+        fun fromSignMagnitude(sign: Int, magnitude: ByteArray): ICPBigInteger
         fun valueOf(long: Long): ICPBigInteger
         fun parseDecimal(s: String): ICPBigInteger
     }
