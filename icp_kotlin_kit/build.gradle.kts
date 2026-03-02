@@ -1,28 +1,35 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `maven-publish`
-    `java-library`
-    alias(libs.plugins.jetbrainsKotlinJvm)
+    alias(libs.plugins.kotlinMultiplatform)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
+kotlin {
+    jvm()
 
-dependencies {
-    implementation(tegralLibs.niwen.lexer)
-    implementation(tegralLibs.niwen.parser)
-    implementation(libs.bundles.http)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.guava)
-    implementation(libs.bouncycastle)
-    implementation(libs.logging.interceptor)
+    sourceSets {
+        val commonMain by getting
+        val commonTest by getting
 
-    testImplementation(libs.mockk)
-    testImplementation(libs.bundles.junit.test)
-    testImplementation(libs.bundles.kotlinx.test)
+        val jvmMain by getting {
+            dependencies {
+                implementation(tegralLibs.niwen.lexer)
+                implementation(tegralLibs.niwen.parser)
+                implementation(libs.bundles.http)
+                implementation(libs.guava)
+                implementation(libs.bouncycastle)
+                implementation(libs.logging.interceptor)
+                implementation(libs.kotlinx.coroutines.core)
+            }
+        }
+
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.mockk)
+                implementation(libs.bundles.junit.test)
+                implementation(libs.bundles.kotlinx.test)
+            }
+        }
+    }
 }
 
 publishing {
@@ -31,16 +38,12 @@ publishing {
             groupId = "com.bity"
             artifactId = "icp_kotlin_kit"
             version = "1.0.1"
-            from(components["java"])
+            from(components["kotlin"])
         }
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile>().configureEach {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "11"
         languageVersion = "1.9"
