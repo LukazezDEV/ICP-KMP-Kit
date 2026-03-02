@@ -8,8 +8,8 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVariant
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import java.lang.RuntimeException
-import java.math.BigInteger
+import kotlin.RuntimeException
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
@@ -393,7 +393,7 @@ object CandidDecoder {
             Double::class,
             String::class,
             Boolean::class,
-            BigInteger::class,
+            ICPBigInteger::class,
             Char::class -> getPrimitiveValueForKey(candidRecord, key)
 
             // TODO, could class be Array<ByteArray>::class

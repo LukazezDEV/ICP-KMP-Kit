@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.generated_file
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
@@ -80,7 +80,7 @@ typealias EXTAccountIdentifier = String
 /**
  * type EXTBalance = nat;
  */
-typealias EXTBalance = BigInteger
+typealias EXTBalance = ICPBigInteger
 
 /**
  * type EXTMemo = vec nat8;
@@ -152,7 +152,7 @@ typealias StableOffers = kotlin.Array<StableOffersClass>
 class StableOffersClass(
     val account_1: Account,
     val account_2: Account,
-    val intValue: BigInteger
+    val intValue: ICPBigInteger
 )
 /**
  * type StableSalesBalances = vec record {
@@ -199,11 +199,11 @@ object OrigynNFT {
      * };
      */
     class ApprovalResultClass(
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger,
         val approval_result: ApprovalResult
     ) {
         sealed class ApprovalResult {
-            class Ok(val Ok: BigInteger): ApprovalResult()
+            class Ok(val Ok: ICPBigInteger): ApprovalResult()
             class Err(val Err: ApprovalError): ApprovalResult()
         }
     }
@@ -277,11 +277,11 @@ object OrigynNFT {
      * };
      */
     class AllocationRecordStable(
-        val allocated_space: BigInteger,
+        val allocated_space: ICPBigInteger,
         val token_id: String,
-        val available_space: BigInteger,
+        val available_space: ICPBigInteger,
         val canister: ICPPrincipalApiModel,
-        val chunks: Array<BigInteger>,
+        val chunks: Array<ICPBigInteger>,
         val library_id: String
     )
     /**
@@ -312,7 +312,7 @@ object OrigynNFT {
     sealed class ApprovalError {
         class GenericError(
             val message: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): ApprovalError()
 
         class CreatexInFuture(
@@ -380,16 +380,16 @@ object OrigynNFT {
      */
     sealed class OrigynAskFeature {
         class kyc(val kyc: ICPPrincipalApiModel): OrigynAskFeature()
-        class start_price(val start_price: BigInteger): OrigynAskFeature()
+        class start_price(val start_price: ICPBigInteger): OrigynAskFeature()
         class token(val token: TokenSpec): OrigynAskFeature()
         class fee_schema(val fee_schema: String): OrigynAskFeature()
         class Notify(val notify: Array<ICPPrincipalApiModel>): OrigynAskFeature()
         class wait_for_quiet(val wait_for_quiet: WaitForQuietType): OrigynAskFeature()
-        class reserve(val reserve: BigInteger): OrigynAskFeature()
-        class start_date(val start_date: BigInteger): OrigynAskFeature()
+        class reserve(val reserve: ICPBigInteger): OrigynAskFeature()
+        class start_date(val start_date: ICPBigInteger): OrigynAskFeature()
         class min_increase(val min_increase: MinIncreaseType): OrigynAskFeature()
         class Allow_list(val allow_list: Array<ICPPrincipalApiModel>): OrigynAskFeature()
-        class buy_now(val buy_now: BigInteger): OrigynAskFeature()
+        class buy_now(val buy_now: ICPBigInteger): OrigynAskFeature()
         class fee_accounts(val fee_accounts: FeeAccountsParams): OrigynAskFeature()
         class nifty_settlement(val nifty_settlement: NiftySettlementType): OrigynAskFeature()
         object atomic: OrigynAskFeature()
@@ -418,7 +418,7 @@ object OrigynNFT {
 
             class Stake(
                 val principal: ICPPrincipalApiModel,
-                val natValue: BigInteger
+                val natValueICPBigInteger
             )
             class Filter(
                 val tokens: Array<TokenSpecFilter>?,
@@ -429,7 +429,7 @@ object OrigynNFT {
 
         class unsubscribe(
             val icpPrincipalApiModel: ICPPrincipalApiModel,
-            val natValue: BigInteger
+            val natValueICPBigInteger
         ): AskSubscribeRequest()
     }
 
@@ -454,20 +454,20 @@ object OrigynNFT {
      * };
      */
     class AuctionConfig(
-        val start_price: BigInteger,
+        val start_price: ICPBigInteger,
         val token: TokenSpec,
-        val reserve: BigInteger?,
-        val start_date: BigInteger,
+        val reserve: ICPBigInteger?,
+        val start_date: ICPBigInteger,
         val min_increase: MinIncreaseType,
         val allow_list: Array<ICPPrincipalApiModel>?,
-        val buy_now: BigInteger?,
+        val buy_now: ICPBigInteger?,
         val ending: Ending
     ) {
         sealed class Ending {
-            class date(val date: BigInteger): Ending()
+            class date(val date: ICPBigInteger): Ending()
             class wait_for_quiet(
-                val max: BigInteger,
-                val date: BigInteger,
+                val max: ICPBigInteger,
+                val date: ICPBigInteger,
                 val fade: Double,
                 val extension: ULong
             ): Ending()
@@ -495,15 +495,15 @@ object OrigynNFT {
         val status: Status,
         val participants: Array<Participants>,
         val token: TokenSpec__1,
-        val current_bid_amount: BigInteger,
+        val current_bid_amount: ICPBigInteger,
         val winner: Account?,
-        val end_date: BigInteger,
+        val end_date: ICPBigInteger,
         val current_config: BidConfigShared,
-        val start_date: BigInteger,
-        val wait_for_quiet_count: BigInteger?,
+        val start_date: ICPBigInteger,
+        val wait_for_quiet_count: ICPBigInteger?,
         val current_escrow: EscrowReceipt?,
         val allow_list: Array<AllowList>?,
-        val min_next_bid: BigInteger,
+        val min_next_bid: ICPBigInteger,
         val config: PricingConfigShared__1
     ) {
         sealed class Status {
@@ -515,7 +515,7 @@ object OrigynNFT {
 
         class Participants(
             val icpPrincipalApiModel: ICPPrincipalApiModel,
-            val intValue: BigInteger
+            val intValue: ICPBigInteger
         )
 
         class AllowList(
@@ -705,8 +705,8 @@ object OrigynNFT {
     class BidResponse(
         val token_id: String,
         val txn_type: TxnType,
-        val timestamp: BigInteger,
-        val index: BigInteger
+        val timestamp: ICPBigInteger,
+        val index: ICPBigInteger
     ) {
         sealed class TxnType {
             class escrow_deposit(
@@ -716,14 +716,14 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class fee_deposit(
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_network_updated(
@@ -732,14 +732,14 @@ object OrigynNFT {
             ): TxnType()
 
             class escrow_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_managers_updated(
@@ -751,7 +751,7 @@ object OrigynNFT {
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String
             ): TxnType()
 
@@ -772,7 +772,7 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String?
             ): TxnType()
 
@@ -784,7 +784,7 @@ object OrigynNFT {
             ): TxnType() {
                 class Sale(
                     val token: TokenSpec,
-                    val amount: BigInteger
+                    val amount: ICPBigInteger
                 )
             }
 
@@ -794,19 +794,19 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val receiver: Account__1,
                 val sale_id: String?
             ): TxnType()
 
             class extensible(val extensible: CandyShared): TxnType()
             class fee_deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class owner_transfer(
@@ -827,23 +827,23 @@ object OrigynNFT {
             ): TxnType()
 
             class sale_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
         }
 
@@ -884,9 +884,9 @@ object OrigynNFT {
      * };
      */
     sealed class CandyShared {
-        class Int(val Int: BigInteger): CandyShared()
+        class Int(val Int: ICPBigInteger): CandyShared()
         class Map(val Map: kotlin.Array<MapClass>): CandyShared()
-        class Nat(val Nat: BigInteger): CandyShared()
+        class Nat(val Nat: ICPBigInteger): CandyShared()
         class Set(val Set: kotlin.Array<CandyShared>): CandyShared()
         class Nat16(val Nat16: UShort): CandyShared()
         class Nat32(val Nat32: UInt): CandyShared()
@@ -894,9 +894,9 @@ object OrigynNFT {
         class Blob(val Blob: kotlin.Array<UByte>): CandyShared()
         class Bool(val Bool: Boolean): CandyShared()
         class Int8(val Int8: Byte): CandyShared()
-        class Ints(val Ints: kotlin.Array<BigInteger>): CandyShared()
+        class Ints(val Ints: kotlin.Array<ICPBigInteger>): CandyShared()
         class Nat8(val Nat8: UByte): CandyShared()
-        class Nats(val Nats: kotlin.Array<BigInteger>): CandyShared()
+        class Nats(val Nats: kotlin.Array<ICPBigInteger>): CandyShared()
         class Text(val Text: String): CandyShared()
         class Bytes(val Bytes: kotlin.Array<UByte>): CandyShared()
         class Int16(val Int16: Short): CandyShared()
@@ -1009,10 +1009,10 @@ object OrigynNFT {
         ): ChunkContent()
 
         class chunk(
-            val total_chunks: BigInteger,
+            val total_chunks: ICPBigInteger
             val content: Array<UByte>,
             val storage_allocation: AllocationRecordStable,
-            val current_chunk: BigInteger?
+            val current_chunk: ICPBigInteger?
         ): ChunkContent()
     }
     /**
@@ -1024,7 +1024,7 @@ object OrigynNFT {
      */
     class ChunkRequest(
         val token_id: String,
-        val chunk: BigInteger?,
+        val chunk: ICPBigInteger?,
         val library_id: String
     )
     /**
@@ -1059,7 +1059,7 @@ object OrigynNFT {
      * };
      */
     class CollectionInfo(
-        val multi_canister_count: BigInteger?,
+        val multi_canister_count: ICPBigInteger?,
         val managers: Array<ICPPrincipalApiModel>?,
         val owner: ICPPrincipalApiModel?,
         val metadata: CandyShared?,
@@ -1069,20 +1069,20 @@ object OrigynNFT {
         val created_at: ULong?,
         val fields: Array<Fields>?,
         val upgraded_at: ULong?,
-        val token_ids_count: BigInteger?,
-        val available_space: BigInteger?,
+        val token_ids_count: ICPBigInteger?,
+        val available_space: ICPBigInteger?,
         val multi_canister: Array<ICPPrincipalApiModel>?,
         val token_ids: Array<String>?,
-        val transaction_count: BigInteger?,
-        val unique_holders: BigInteger?,
-        val total_supply: BigInteger?,
+        val transaction_count: ICPBigInteger?,
+        val unique_holders: ICPBigInteger?,
+        val total_supply: ICPBigInteger?,
         val symbol: String?,
-        val allocated_storage: BigInteger?
+        val allocated_storage: ICPBigInteger?
     ) {
         class Fields(
             val textValue: String,
-            val natValue: BigInteger?,
-            val natValue_2: BigInteger?
+            val natValue: ICPBigInteger?,
+            val natValue_2: ICPBigInteger?
         )
 
     }
@@ -1124,7 +1124,7 @@ object OrigynNFT {
      * type DIP721NatResult = variant { Ok : nat; Err : NftError };
      */
     sealed class DIP721NatResult {
-        class Ok(val Ok: BigInteger): DIP721NatResult()
+        class Ok(val Ok: ICPBigInteger): DIP721NatResult()
         class Err(val Err: NftError): DIP721NatResult()
 
     }
@@ -1137,10 +1137,10 @@ object OrigynNFT {
      * };
      */
     class DIP721Stats(
-        val cycles: BigInteger,
-        val total_transactions: BigInteger,
-        val total_unique_holders: BigInteger,
-        val total_supply: BigInteger
+        val cycles: ICPBigInteger
+        val total_transactions: ICPBigInteger
+        val total_unique_holders: ICPBigInteger
+        val total_supply: ICPBigInteger
     )
     /**
      * type DIP721SupportedInterface = variant {
@@ -1169,7 +1169,7 @@ object OrigynNFT {
      * type DIP721TokensListMetadata = variant { Ok : vec nat; Err : NftError };
      */
     sealed class DIP721TokensListMetadata {
-        class Ok(val Ok: Array<BigInteger>): DIP721TokensListMetadata()
+        class Ok(val Ok: Array<ICPBigInteger>): DIP721TokensListMetadata()
         class Err(val Err: NftError): DIP721TokensListMetadata()
 
     }
@@ -1195,7 +1195,7 @@ object OrigynNFT {
         val canisterHeapMemorySize: NumericEntity,
         val canisterCycles: NumericEntity,
         val canisterMemorySize: NumericEntity,
-        val timeMillis: BigInteger
+        val timeMillis: ICPBigInteger
     )
     /**
      * type Data = variant {
@@ -1226,9 +1226,9 @@ object OrigynNFT {
      * };
      */
     sealed class Data {
-        class Int(val Int: BigInteger): Data()
+        class Int(val Int: ICPBigInteger): Data()
         class Map(val Map: kotlin.Array<MapClass>): Data()
-        class Nat(val Nat: BigInteger): Data()
+        class Nat(val Nat: ICPBigInteger): Data()
         class Set(val Set: kotlin.Array<CandyShared>): Data()
         class Nat16(val Nat16: UShort): Data()
         class Nat32(val Nat32: UInt): Data()
@@ -1236,9 +1236,9 @@ object OrigynNFT {
         class Blob(val Blob: kotlin.Array<UByte>): Data()
         class Bool(val Bool: Boolean): Data()
         class Int8(val Int8: Byte): Data()
-        class Ints(val Ints: kotlin.Array<BigInteger>): Data()
+        class Ints(val Ints: kotlin.Array<ICPBigInteger>): Data()
         class Nat8(val Nat8: UByte): Data()
-        class Nats(val Nats: kotlin.Array<BigInteger>): Data()
+        class Nats(val Nats: kotlin.Array<ICPBigInteger>): Data()
         class Text(val Text: String): Data()
         class Bytes(val Bytes: kotlin.Array<UByte>): Data()
         class Int16(val Int16: Short): Data()
@@ -1279,7 +1279,7 @@ object OrigynNFT {
         val trx_id: TransactionID__1?,
         val seller: Account,
         val buyer: Account,
-        val amount: BigInteger,
+        val amount: ICPBigInteger
         val sale_id: String?
     )
     /**
@@ -1294,7 +1294,7 @@ object OrigynNFT {
         val token: TokenSpec__1,
         val withdraw_to: Account,
         val buyer: Account,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
     /**
      * type DistributeSaleRequest = record { seller : opt Account };
@@ -1313,14 +1313,14 @@ object OrigynNFT {
         val decay_type: DecayType
     ) {
         sealed class TimeUnit {
-            class day(val day: BigInteger): TimeUnit()
-            class hour(val hour: BigInteger): TimeUnit()
-            class minute(val minute: BigInteger): TimeUnit()
+            class day(val day: ICPBigInteger): TimeUnit()
+            class hour(val hour: ICPBigInteger): TimeUnit()
+            class minute(val minute: ICPBigInteger): TimeUnit()
 
         }
 
         sealed class DecayType {
-            class flat(val flat: BigInteger): DecayType()
+            class flat(val flat: ICPBigInteger): DecayType()
             class percent(val percent: Double): DecayType()
 
         }
@@ -1408,7 +1408,7 @@ object OrigynNFT {
         val vecValue: Array<UByte>?
     ) {
         class Record(
-            val locked: BigInteger?,
+            val locked: ICPBigInteger?,
             val seller: ICPPrincipalApiModel,
             val price: ULong
         )
@@ -1595,8 +1595,8 @@ object OrigynNFT {
     class EndSaleResponse(
         val token_id: String,
         val txn_type: TxnType,
-        val timestamp: BigInteger,
-        val index: BigInteger
+        val timestamp: ICPBigInteger
+        val index: ICPBigInteger
     ) {
         sealed class TxnType {
             class escrow_deposit(
@@ -1606,14 +1606,14 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class fee_deposit(
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_network_updated(
@@ -1622,14 +1622,14 @@ object OrigynNFT {
             ): TxnType()
 
             class escrow_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_managers_updated(
@@ -1641,7 +1641,7 @@ object OrigynNFT {
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String
             ): TxnType()
 
@@ -1662,7 +1662,7 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String?
             ): TxnType()
 
@@ -1674,7 +1674,7 @@ object OrigynNFT {
             ): TxnType() {
                 class Sale(
                     val token: TokenSpec,
-                    val amount: BigInteger
+                    val amount: ICPBigInteger
                 )
             }
 
@@ -1684,19 +1684,19 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val receiver: Account__1,
                 val sale_id: String?
             ): TxnType()
 
             class extensible(val extensible: CandyShared): TxnType()
             class fee_deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class owner_transfer(
@@ -1717,23 +1717,23 @@ object OrigynNFT {
             ): TxnType()
 
             class sale_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
         }
 
@@ -1742,8 +1742,8 @@ object OrigynNFT {
      * type EndingType = variant { date : int; timeout : nat };
      */
     sealed class EndingType {
-        class date(val date: BigInteger): EndingType()
-        class timeout(val timeout: BigInteger): EndingType()
+        class date(val date: ICPBigInteger): EndingType()
+        class timeout(val timeout: ICPBigInteger): EndingType()
 
     }
     /**
@@ -1867,7 +1867,7 @@ object OrigynNFT {
         val token_id: String,
         val seller: Account__1,
         val buyer: Account__1,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
     /**
      * type EscrowReceipt__1 = record {
@@ -1883,7 +1883,7 @@ object OrigynNFT {
         val token_id: String,
         val seller: Account__1,
         val buyer: Account__1,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
     /**
      * type EscrowRecord = record {
@@ -1901,9 +1901,9 @@ object OrigynNFT {
         val token: TokenSpec__2,
         val token_id: String,
         val seller: Account__2,
-        val lock_to_date: BigInteger?,
+        val lock_to_date: ICPBigInteger?,
         val buyer: Account__2,
-        val amount: BigInteger,
+        val amount: ICPBigInteger
         val sale_id: String?,
         val account_hash: Array<UByte>?
     )
@@ -1923,9 +1923,9 @@ object OrigynNFT {
         val token: TokenSpec__1,
         val token_id: String,
         val seller: Account,
-        val lock_to_date: BigInteger?,
+        val lock_to_date: ICPBigInteger?,
         val buyer: Account,
-        val amount: BigInteger,
+        val amount: ICPBigInteger
         val sale_id: String?,
         val account_hash: Array<UByte>?
     )
@@ -1939,7 +1939,7 @@ object OrigynNFT {
     class EscrowRequest(
         val token_id: String,
         val deposit: DepositDetail,
-        val lock_to_date: BigInteger?
+        val lock_to_date: ICPBigInteger?
     )
     /**
      * type EscrowResponse = record {
@@ -1949,7 +1949,7 @@ object OrigynNFT {
      * };
      */
     class EscrowResponse(
-        val balance: BigInteger,
+        val balance: ICPBigInteger
         val receipt: EscrowReceipt,
         val transaction: TransactionRecord
     )
@@ -1967,7 +1967,7 @@ object OrigynNFT {
      * };
      */
     class FeeDepositResponse(
-        val balance: BigInteger,
+        val balance: ICPBigInteger
         val transaction: TransactionRecord
     )
     /**
@@ -1984,7 +1984,7 @@ object OrigynNFT {
         val token: TokenSpec__1,
         val withdraw_to: Account,
         val account: Account,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     ) {
         sealed class Status {
             class locked(
@@ -2053,8 +2053,8 @@ object OrigynNFT {
         class BoolContent(val BoolContent: Boolean): GenericValue()
         class Nat8Content(val Nat8Content: UByte): GenericValue()
         class Int64Content(val Int64Content: Long): GenericValue()
-        class IntContent(val IntContent: BigInteger): GenericValue()
-        class NatContent(val NatContent: BigInteger): GenericValue()
+        class IntContent(val IntContent: ICPBigInteger): GenericValue()
+        class NatContent(val NatContent: ICPBigInteger): GenericValue()
         class Nat16Content(val Nat16Content: UShort): GenericValue()
         class Int32Content(val Int32Content: Int): GenericValue()
         class Int8Content(val Int8Content: Byte): GenericValue()
@@ -2080,9 +2080,9 @@ object OrigynNFT {
      * };
      */
     class GetArchivesResultItem(
-        val end: BigInteger,
+        val end: ICPBigInteger
         val canister_id: ICPPrincipalApiModel,
-        val start: BigInteger
+        val start: ICPBigInteger
     )
     /**
      * type GetLatestLogMessagesParameters = record {
@@ -2128,9 +2128,9 @@ object OrigynNFT {
      * };
      */
     class GetMetricsParameters(
-        val dateToMillis: BigInteger,
+        val dateToMillis: ICPBigInteger
         val granularity: MetricsGranularity,
-        val dateFromMillis: BigInteger
+        val dateFromMillis: ICPBigInteger
     )
     /**
      * type GetTransactionsResult = record {
@@ -2140,12 +2140,12 @@ object OrigynNFT {
      * };
      */
     class GetTransactionsResult(
-        val log_length: BigInteger,
+        val log_length: ICPBigInteger
         val blocks: Array<Blocks>,
         val archived_blocks: Array<ArchivedTransactionResponse>
     ) {
         class Blocks(
-            val id: BigInteger,
+            val id: ICPBigInteger
             val block: Value__1
         )
 
@@ -2158,12 +2158,12 @@ object OrigynNFT {
      * };
      */
     class GetTransactionsResult__1(
-        val log_length: BigInteger,
+        val log_length: ICPBigInteger
         val blocks: Array<Blocks>,
         val archived_blocks: Array<ArchivedTransactionResponse>
     ) {
         class Blocks(
-            val id: BigInteger,
+            val id: ICPBigInteger
             val block: Value__1
         )
 
@@ -2246,7 +2246,7 @@ object OrigynNFT {
         val canisterHeapMemorySize: OrigynCanisterHeapMemoryAggregatedData,
         val canisterCycles: OrigynCanisterCyclesAggregatedData,
         val canisterMemorySize: OrigynCanisterMemoryAggregatedData,
-        val timeMillis: BigInteger
+        val timeMillis: ICPBigInteger
     )
     /**
      * type HttpRequest = record {
@@ -2273,9 +2273,9 @@ object OrigynNFT {
      * };
      */
     class ICTokenSpec(
-        val id: BigInteger?,
-        val fee: BigInteger?,
-        val decimals: BigInteger,
+        val id: ICPBigInteger?,
+        val fee: ICPBigInteger?,
+        val decimals: ICPBigInteger
         val canister: ICPPrincipalApiModel,
         val standard: Standard,
         val symbol: String
@@ -2301,9 +2301,9 @@ object OrigynNFT {
      * };
      */
     class ICTokenSpec__1(
-        val id: BigInteger?,
-        val fee: BigInteger?,
-        val decimals: BigInteger,
+        val id: ICPBigInteger?,
+        val fee: ICPBigInteger?,
+        val decimals: ICPBigInteger
         val canister: ICPPrincipalApiModel,
         val standard: Standard,
         val symbol: String
@@ -2456,19 +2456,19 @@ object OrigynNFT {
 
         class add_storage_canisters(
             val principal: ICPPrincipalApiModel,
-            val natValue: BigInteger,
+            val natValue: ICPBigInteger
             val record: RecordClass
         ) : ManageStorageRequest() {
             class RecordClass(
-                val natValue_1 : BigInteger,
-                val natValue_2 : BigInteger,
-                val natValue_3 : BigInteger
+                val natValue_1 : ICPBigInteger
+                val natValue_2 : ICPBigInteger
+                val natValue_3 : ICPBigInteger
             )
         }
 
         sealed class configure_storage: ManageStorageRequest() {
-            class stableBtree(val stableBtree: BigInteger?)
-            class heap(val heap: BigInteger?)
+            class stableBtree(val stableBtree: ICPBigInteger?)
+            class heap(val heap: ICPBigInteger?)
         }
 
     }
@@ -2480,13 +2480,13 @@ object OrigynNFT {
      */
     sealed class ManageStorageResponse {
         class add_storage_canisters(
-            val natValue_1: BigInteger,
-            val natValue_2: BigInteger
+            val natValue_1: ICPBigInteger
+            val natValue_2: ICPBigInteger
         ): ManageStorageResponse()
 
         class configure_storage(
-            val natValue_1: BigInteger,
-            val natValue_2: BigInteger
+            val natValue_1: ICPBigInteger
+            val natValue_2: ICPBigInteger
         ): ManageStorageResponse()
     }
     /**
@@ -2634,8 +2634,8 @@ object OrigynNFT {
     class MarketTransferRequestReponse(
         val token_id: String,
         val txn_type: TxnType,
-        val timestamp: BigInteger,
-        val index: BigInteger
+        val timestamp: ICPBigInteger
+        val index: ICPBigInteger
     ) {
         sealed class TxnType {
             class escrow_deposit(
@@ -2645,14 +2645,14 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class fee_deposit(
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_network_updated(
@@ -2661,14 +2661,14 @@ object OrigynNFT {
             ): TxnType()
 
             class escrow_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_managers_updated(
@@ -2680,7 +2680,7 @@ object OrigynNFT {
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String
             ): TxnType()
 
@@ -2701,7 +2701,7 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String?
             ): TxnType()
 
@@ -2713,7 +2713,7 @@ object OrigynNFT {
             ): TxnType() {
                 class Sale(
                     val token_id: TokenSpec,
-                    val amount: BigInteger
+                    val amount: ICPBigInteger
                 )
             }
 
@@ -2723,19 +2723,19 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val receiver: Account__1,
                 val sale_id: String?
             ): TxnType()
 
             class extensible(val extensible: CandyShared): TxnType()
             class fee_deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class owner_transfer(
@@ -2756,23 +2756,23 @@ object OrigynNFT {
             ): TxnType()
 
             class sale_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
         }
 
@@ -2800,7 +2800,7 @@ object OrigynNFT {
      * type MinIncreaseType = variant { amount : nat; percentage : float64 };
      */
     sealed class MinIncreaseType {
-        class amount(val amount: BigInteger): MinIncreaseType()
+        class amount(val amount: ICPBigInteger): MinIncreaseType()
         class percentage(val percentage: Double): MinIncreaseType()
 
     }
@@ -3184,8 +3184,8 @@ object OrigynNFT {
     class NiftySettlementType(
         val fixed: Boolean,
         val interestRatePerSecond: Double,
-        val duration: BigInteger?,
-        val expiration: BigInteger?,
+        val duration: ICPBigInteger?,
+        val expiration: ICPBigInteger?,
         val lenderOffer: Boolean
     )
     /**
@@ -3313,7 +3313,7 @@ object OrigynNFT {
      * };
      */
     class RecognizeEscrowResponse(
-        val balance: BigInteger,
+        val balance: ICPBigInteger
         val receipt: EscrowReceipt,
         val transaction: TransactionRecord?
     )
@@ -3353,14 +3353,14 @@ object OrigynNFT {
         class status(val status: String): SaleInfoRequest()
         class fee_deposit_info(val fee_deposit_info: Account?): SaleInfoRequest()
         class active(
-            val natValue_1: BigInteger,
-            val natValue_2: BigInteger
+            val natValue_1: ICPBigInteger
+            val natValue_2: ICPBigInteger
         ): SaleInfoRequest()
 
         class deposit_info(val deposit_info: Account?): SaleInfoRequest()
         class history(
-            val natValue_1: BigInteger,
-            val natValue_2: BigInteger
+            val natValue_1: ICPBigInteger
+            val natValue_2: ICPBigInteger
         ): SaleInfoRequest()
 
         class escrow_info(val escrow_info: EscrowReceipt): SaleInfoRequest()
@@ -3390,7 +3390,7 @@ object OrigynNFT {
         class Active(
             val eof: Boolean,
             val records: Array<Records>,
-            val count: BigInteger
+            val count: ICPBigInteger
         ): SaleInfoResponse() {
             class Records(
                 val textValue: String,
@@ -3402,7 +3402,7 @@ object OrigynNFT {
         class history(
             val eof: Boolean,
             val records: Array<SaleStatusShared?>,
-            val count: BigInteger
+            val count: ICPBigInteger
         ): SaleInfoResponse()
 
         class escrow_info(val escrow_info: SubAccountInfo): SaleInfoResponse()
@@ -3474,23 +3474,23 @@ object OrigynNFT {
      */
     class StableBucketData(
         val principal: ICPPrincipalApiModel,
-        val allocated_space: BigInteger,
-        val date_added: BigInteger,
+        val allocated_space: ICPBigInteger
+        val date_added: ICPBigInteger
         val version: Version,
         val b_gateway: Boolean,
-        val available_space: BigInteger,
+        val available_space: ICPBigInteger
         val allocations: Array<Allocations>
     ) {
 
         class Version(
-            val natValue_1: BigInteger,
-            val natValue_2: BigInteger,
-            val natValue_3: BigInteger,
+            val natValue_1: ICPBigInteger
+            val natValue_2: ICPBigInteger
+            val natValue_3: ICPBigInteger
         )
 
         class Allocations(
             val allocationValue: AllocationValue,
-            val intValue: BigInteger
+            val intValue: ICPBigInteger
         ) {
             class AllocationValue(
                 val textValue_1: String,
@@ -3521,9 +3521,9 @@ object OrigynNFT {
         val logo: String?,
         val name: String?,
         val network: ICPPrincipalApiModel?,
-        val available_space: BigInteger,
+        val available_space: ICPBigInteger
         val symbol: String?,
-        val allocated_storage: BigInteger
+        val allocated_storage: ICPBigInteger
     )
     /**
      * type StageChunkArg = record {
@@ -3537,7 +3537,7 @@ object OrigynNFT {
     class StageChunkArg(
         val content: Array<UByte>,
         val token_id: String,
-        val chunk: BigInteger,
+        val chunk: ICPBigInteger
         val filedata: CandyShared,
         val library_id: String
     )
@@ -3564,7 +3564,7 @@ object OrigynNFT {
     class StakeRecord(
         val staker: Account,
         val token_id: String,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
     /**
      * type StateSize = record {
@@ -3578,13 +3578,13 @@ object OrigynNFT {
      * };
      */
     class StateSize(
-        val sales_balances: BigInteger,
-        val offers: BigInteger,
-        val nft_ledgers: BigInteger,
-        val allocations: BigInteger,
-        val nft_sales: BigInteger,
-        val buckets: BigInteger,
-        val escrow_balances: BigInteger
+        val sales_balances: ICPBigInteger
+        val offers: ICPBigInteger
+        val nft_ledgers: ICPBigInteger
+        val allocations: ICPBigInteger
+        val nft_sales: ICPBigInteger
+        val buckets: ICPBigInteger
+        val escrow_balances: ICPBigInteger
     )
     /**
      * type StorageMetrics = record {
@@ -3596,9 +3596,9 @@ object OrigynNFT {
      */
     class StorageMetrics(
         val gateway: ICPPrincipalApiModel,
-        val available_space: BigInteger,
+        val available_space: ICPBigInteger
         val allocations: Array<AllocationRecordStable>,
-        val allocated_storage: BigInteger
+        val allocated_storage: ICPBigInteger
     )
     /**
      * type StorageMetricsResult = variant { ok : StorageMetrics; err : OrigynError };
@@ -3627,7 +3627,7 @@ object OrigynNFT {
      */
     class StreamingCallbackToken(
         val key: String,
-        val index: BigInteger,
+        val index: ICPBigInteger
         val content_encoding: String
     )
     /**
@@ -3692,8 +3692,8 @@ object OrigynNFT {
 
         class Tokens(
             val token: TokenSpec__1,
-            val min_amount: BigInteger?,
-            val max_amount: BigInteger?
+            val min_amount: ICPBigInteger?,
+            val max_amount: ICPBigInteger?
         )
 
     }
@@ -3723,7 +3723,7 @@ object OrigynNFT {
         val approved_by: ICPPrincipalApiModel?,
         val properties: Array<Properties>,
         val is_burned: Boolean,
-        val token_identifier: BigInteger,
+        val token_identifier: ICPBigInteger
         val burned_at: ULong?,
         val burned_by: ICPPrincipalApiModel?,
         val minted_at: ULong,
@@ -3784,7 +3784,7 @@ object OrigynNFT {
      * };
      */
     sealed class TransactionID {
-        class Nat(val nat: BigInteger): TransactionID()
+        class Nat(val nat: ICPBigInteger): TransactionID()
         class Text(val text: String): TransactionID()
         class extensible(val candyShared: CandyShared): TransactionID()
 
@@ -3797,7 +3797,7 @@ object OrigynNFT {
      * };
      */
     sealed class TransactionID__1 {
-        class Nat(val nat: BigInteger): TransactionID__1()
+        class Nat(val nat: ICPBigInteger): TransactionID__1()
         class Text(val text: String): TransactionID__1()
         class extensible(val candyShared: CandyShared): TransactionID__1()
 
@@ -3806,15 +3806,15 @@ object OrigynNFT {
      * type TransactionRange = record { start : nat; length : nat };
      */
     class TransactionRange(
-        val start: BigInteger,
-        val length: BigInteger
+        val start: ICPBigInteger
+        val length: ICPBigInteger
     )
     /**
      * type TransactionRange__1 = record { start : nat; length : nat };
      */
     class TransactionRange__1(
-        val start: BigInteger,
-        val length: BigInteger
+        val start: ICPBigInteger
+        val length: ICPBigInteger
     )
     /**
      * type TransactionRecord = record {
@@ -3940,8 +3940,8 @@ object OrigynNFT {
     class TransactionRecord(
         val token_id: String,
         val txn_type: TxnType,
-        val timestamp: BigInteger,
-        val index: BigInteger
+        val timestamp: ICPBigInteger
+        val index: ICPBigInteger
     ) {
         sealed class TxnType {
             class escrow_deposit(
@@ -3951,14 +3951,14 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class fee_deposit(
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_network_updated(
@@ -3967,14 +3967,14 @@ object OrigynNFT {
             ): TxnType()
 
             class escrow_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_managers_updated(
@@ -3986,7 +3986,7 @@ object OrigynNFT {
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String
             ): TxnType()
 
@@ -4007,7 +4007,7 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String?
             ): TxnType()
 
@@ -4019,7 +4019,7 @@ object OrigynNFT {
             ): TxnType() {
                 class Sale(
                     val token: TokenSpec,
-                    val amount: BigInteger
+                    val amount: ICPBigInteger
                 )
             }
 
@@ -4029,19 +4029,19 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val receiver: Account__1,
                 val sale_id: String?
             ): TxnType()
 
             class extensible(val extensible: CandyShared): TxnType()
             class fee_deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class owner_transfer(
@@ -4062,23 +4062,23 @@ object OrigynNFT {
             ): TxnType()
 
             class sale_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
         }
 
@@ -4094,7 +4094,7 @@ object OrigynNFT {
      */
     class TransferArgs(
         val to: Account__3,
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger
         val memo: Array<UByte>?,
         val from_subaccount: Array<UByte>?,
         val created_at_time: ULong?
@@ -4112,11 +4112,11 @@ object OrigynNFT {
     sealed class TransferError {
         class GenericError(
             val message: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): TransferError()
 
         class Duplicate(
-            val duplicate_of: BigInteger
+            val duplicate_of: ICPBigInteger
         ): TransferError()
 
         object NonExistingTokenId: TransferError()
@@ -4135,11 +4135,11 @@ object OrigynNFT {
      * };
      */
     class TransferResultItem(
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger
         val transfer_result: TransferResult
     ) {
         sealed class TransferResult {
-            class Ok(val Ok: BigInteger): TransferResult()
+            class Ok(val Ok: ICPBigInteger): TransferResult()
             class Err(val Err: TransferError): TransferResult()
 
         }
@@ -4178,13 +4178,13 @@ object OrigynNFT {
      * };
      */
     sealed class UpdateSetting {
-        class maxRecordsToArchive(val maxRecordsToArchive: BigInteger): UpdateSetting()
+        class maxRecordsToArchive(val maxRecordsToArchive: ICPBigInteger): UpdateSetting()
         class archiveIndexType(val archiveIndexType: IndexType): UpdateSetting()
-        class maxArchivePages(val maxArchivePages: BigInteger): UpdateSetting()
-        class settleToRecords(val settleToRecords: BigInteger): UpdateSetting()
-        class archiveCycles(val archiveCycles: BigInteger): UpdateSetting()
-        class maxActiveRecords(val maxActiveRecords: BigInteger): UpdateSetting()
-        class maxRecordsInArchiveInstance(val maxRecordsInArchiveInstance: BigInteger): UpdateSetting()
+        class maxArchivePages(val maxArchivePages: ICPBigInteger): UpdateSetting()
+        class settleToRecords(val settleToRecords: ICPBigInteger): UpdateSetting()
+        class archiveCycles(val archiveCycles: ICPBigInteger): UpdateSetting()
+        class maxActiveRecords(val maxActiveRecords: ICPBigInteger): UpdateSetting()
+        class maxRecordsInArchiveInstance(val maxRecordsInArchiveInstance: ICPBigInteger): UpdateSetting()
         class ArchiveControllers(val archiveControllers: Array<ICPPrincipalApiModel>): UpdateSetting()
 
     }
@@ -4206,9 +4206,9 @@ object OrigynNFT {
      * };
      */
     sealed class Value {
-        class Int(val Int: BigInteger): Value()
+        class Int(val Int: ICPBigInteger): Value()
         class Map(val Map: kotlin.Array<MapClass>): Value()
-        class Nat(val Nat: BigInteger): Value()
+        class Nat(val Nat: ICPBigInteger): Value()
         class Blob(val Blob: kotlin.Array<UByte>): Value()
         class Text(val Text: String): Value()
         class Array(val Array: kotlin.Array<Value>): Value()
@@ -4230,9 +4230,9 @@ object OrigynNFT {
      * };
      */
     sealed class Value__1 {
-        class Int(val Int: BigInteger): Value__1()
+        class Int(val Int: ICPBigInteger): Value__1()
         class Map(val Map: kotlin.Array<MapClass>): Value__1()
-        class Nat(val Nat: BigInteger): Value__1()
+        class Nat(val Nat: ICPBigInteger): Value__1()
         class Blob(val Blob: kotlin.Array<UByte>): Value__1()
         class Text(val Text: String): Value__1()
         class Array(val Array: kotlin.Array<Value__1>): Value__1()
@@ -4247,7 +4247,7 @@ object OrigynNFT {
      * type WaitForQuietType = record { max : nat; fade : float64; extension : nat64 };
      */
     class WaitForQuietType(
-        val max: BigInteger,
+        val max: ICPBigInteger
         val fade: Double,
         val extension: ULong
     )
@@ -4267,7 +4267,7 @@ object OrigynNFT {
         val seller: Account,
         val withdraw_to: Account,
         val buyer: Account,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
     /**
      * type WithdrawRequest = variant {
@@ -4410,8 +4410,8 @@ object OrigynNFT {
     class WithdrawResponse(
         val token_id: String,
         val txn_type: TxnType,
-        val timestamp: BigInteger,
-        val index: BigInteger
+        val timestamp: ICPBigInteger
+        val index: ICPBigInteger
     ) {
         sealed class TxnType {
             class escrow_deposit(
@@ -4421,14 +4421,14 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class fee_deposit(
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_network_updated(
@@ -4437,14 +4437,14 @@ object OrigynNFT {
             ): TxnType()
 
             class escrow_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class canister_managers_updated(
@@ -4456,7 +4456,7 @@ object OrigynNFT {
                 val token: TokenSpec,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String
             ): TxnType()
 
@@ -4477,7 +4477,7 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val sale_id: String?
             ): TxnType()
 
@@ -4489,7 +4489,7 @@ object OrigynNFT {
             ): TxnType() {
                 class Sale(
                     val token: TokenSpec,
-                    val amount: BigInteger
+                    val amount: ICPBigInteger
                 )
             }
 
@@ -4499,19 +4499,19 @@ object OrigynNFT {
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger,
+                val amount: ICPBigInteger
                 val receiver: Account__1,
                 val sale_id: String?
             ): TxnType()
 
             class extensible(val extensible: CandyShared): TxnType()
             class fee_deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val account: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class owner_transfer(
@@ -4532,23 +4532,23 @@ object OrigynNFT {
             ): TxnType()
 
             class sale_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val token_id: String,
                 val trx_id: TransactionID,
                 val seller: Account__1,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
 
             class deposit_withdraw(
-                val fee: BigInteger,
+                val fee: ICPBigInteger
                 val token: TokenSpec,
                 val trx_id: TransactionID,
                 val extensible: CandyShared,
                 val buyer: Account__1,
-                val amount: BigInteger
+                val amount: ICPBigInteger
             ): TxnType()
         }
 
@@ -4564,8 +4564,8 @@ object OrigynNFT {
      */
     class canister_status(
         val status: Status,
-        val memory_size: BigInteger,
-        val cycles: BigInteger,
+        val memory_size: ICPBigInteger
+        val cycles: ICPBigInteger
         val settings: definite_canister_settings,
         val module_hash: Array<UByte>?
     ) {
@@ -4586,9 +4586,9 @@ object OrigynNFT {
      * };
      */
     class definite_canister_settings(
-        val freezing_threshold: BigInteger,
+        val freezing_threshold: ICPBigInteger
         val controllers: Array<ICPPrincipalApiModel>?,
-        val memory_allocation: BigInteger,
-        val compute_allocation: BigInteger
+        val memory_allocation: ICPBigInteger
+        val compute_allocationICPBigInteger
     )
 }

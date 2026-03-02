@@ -1,18 +1,17 @@
 package com.bity.icp_kotlin_kit.domain.model.icp_block
 
-import java.math.BigInteger
-import java.util.Date
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 sealed class ICPBlockTransactionOperation(
-    val amount: BigInteger,
-    val fee: BigInteger? = null
+    val amount: ICPBigInteger
+    val fee: ICPBigInteger? = null
 ) {
 
     class Approve(
         val from: ByteArray,
-        val allowance: BigInteger,
-        val expectedAllowance: BigInteger?,
-        fee: BigInteger,
+        val allowance: ICPBigInteger,
+        val expectedAllowance: ICPBigInteger?,
+        fee: ICPBigInteger,
         val expiresAtNanos: ULong?,
         val spender: ByteArray
     ): ICPBlockTransactionOperation(
@@ -22,7 +21,7 @@ sealed class ICPBlockTransactionOperation(
 
     class Burn(
         val from: ByteArray,
-        amount: BigInteger,
+        amount: ICPBigInteger,
         val spender: ByteArray?
     ): ICPBlockTransactionOperation(
         amount = amount
@@ -30,7 +29,7 @@ sealed class ICPBlockTransactionOperation(
 
     class Mint(
         val to: ByteArray,
-        amount: BigInteger
+        amount: ICPBigInteger
     ): ICPBlockTransactionOperation(
         amount = amount
     )
@@ -38,8 +37,8 @@ sealed class ICPBlockTransactionOperation(
     class Transfer(
         val from: ByteArray,
         val to: ByteArray,
-        amount: BigInteger,
-        fee: BigInteger,
+        amount: ICPBigInteger,
+        fee: ICPBigInteger,
         val spender: ByteArray?
     ): ICPBlockTransactionOperation(
         amount = amount,

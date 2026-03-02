@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.generated_file
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
@@ -14,10 +14,10 @@ import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
  * File generated using ICP Kotlin Kit Plugin
  */
 
-typealias ICRC1IndexCanisterTokens = BigInteger
+typealias ICRC1IndexCanisterTokens = ICPBigInteger
 typealias ICRC1IndexCanisterMap = Array<ICRC1IndexCanister>
 typealias Block = ICRC1IndexCanister.Value
-typealias BlockIndex = BigInteger
+typealias BlockIndex = ICPBigInteger
 private typealias SubAccount = ByteArray
 
 object ICRC1IndexCanister {
@@ -48,8 +48,8 @@ object ICRC1IndexCanister {
     }
 
     class GetBlocksRequest(
-        val start: BigInteger,
-        val length: BigInteger
+        val start: ICPBigInteger,
+        val length: ICPBigInteger
     )
 
     sealed class Value {
@@ -63,7 +63,7 @@ object ICRC1IndexCanister {
         ): Value()
 
         class Nat(
-            val bigInteger: BigInteger
+            val bigIntegerICPBigInteger
         ): Value()
 
         class Nat64(
@@ -71,7 +71,7 @@ object ICRC1IndexCanister {
         ): Value()
 
         class Int(
-            val bigInteger: BigInteger
+            val bigIntegerICPBigInteger
         ): Value()
 
         class Array(
@@ -103,12 +103,12 @@ object ICRC1IndexCanister {
     )
 
     class Approve(
-        val fee: BigInteger?,
+        val fee: ICPBigInteger?,
         val from: Account,
         val memo: Array<UByte>?,
         val created_at_time: ULong?,
-        val amount: BigInteger,
-        val expected_allowance: BigInteger?,
+        val amount: ICPBigInteger,
+        val expected_allowance: ICPBigInteger?,
         val expires_at: ULong?,
         val spender: Account
     )
@@ -117,7 +117,7 @@ object ICRC1IndexCanister {
         val from: Account,
         val memo: Array<UByte>?,
         val created_at_time: ULong?,
-        val amount: BigInteger,
+        val amount: ICPBigInteger,
         val spender: Account?
     )
 
@@ -125,16 +125,16 @@ object ICRC1IndexCanister {
         val to: Account,
         val memo: Array<UByte>?,
         val created_at_time: ULong?,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
 
     class Transfer(
         val to: Account,
-        val fee: BigInteger?,
+        val fee: ICPBigInteger?,
         val from: Account,
         val memo: Array<UByte>?,
         val created_at_time: ULong?,
-        val amount: BigInteger,
+        val amount: ICPBigInteger,
         val spender: Account?
     )
 
@@ -145,7 +145,7 @@ object ICRC1IndexCanister {
         val account: Account,
         // Maximum number of transactions to fetch.
         val start: BlockIndex?,
-        val max_results: BigInteger
+        val max_resultsICPBigInteger
     )
 
     class TransactionWithId(

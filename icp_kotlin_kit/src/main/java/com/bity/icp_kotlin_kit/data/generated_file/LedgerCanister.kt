@@ -8,7 +8,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 /**
  * File generated using ICP Kotlin Kit Plugin
@@ -34,7 +34,7 @@ object LedgerCanister {
      * type Allowance = record { allowance : nat; expires_at : opt nat64 };
      */
     class Allowance(
-        val allowance: BigInteger,
+        val allowance: ICPBigInteger,
         val expires_at: ULong?
     )
 
@@ -59,12 +59,12 @@ object LedgerCanister {
      * };
      */
     class ApproveArgs(
-        val fee: BigInteger?,
+        val fee: ICPBigInteger?,
         val memo: ByteArray?,
         val from_subaccount: ByteArray?,
         val created_at_time: ULong?,
-        val amount: BigInteger,
-        val expected_allowance: BigInteger?,
+        val amount: ICPBigInteger,
+        val expected_allowance: ICPBigInteger?,
         val expires_at: ULong?,
         val spender: Account
     )
@@ -85,16 +85,16 @@ object LedgerCanister {
     sealed class ApproveError {
         class GenericError(
             val message: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): ApproveError()
         data object TemporarilyUnavailable : ApproveError()
-        class Duplicate(val duplicate_of: BigInteger): ApproveError()
-        class BadFee(val expected_fee: BigInteger): ApproveError()
-        class AllowanceChanged(val current_allowance: BigInteger): ApproveError()
+        class Duplicate(val duplicate_of: ICPBigInteger) : ApproveError()
+        class BadFee(val expected_fee: ICPBigInteger) : ApproveError()
+        class AllowanceChanged(val current_allowance: ICPBigInteger) : ApproveError()
         class CreatedInFuture(val ledger_time: ULong): ApproveError()
         data object TooOld : ApproveError()
         class Expired(val ledger_time: ULong): ApproveError()
-        class InsufficientFunds(val balance: BigInteger): ApproveError()
+        class InsufficientFunds(val balance: ICPBigInteger): ApproveError()
     }
 
     /**
@@ -271,7 +271,7 @@ object LedgerCanister {
         class Approve(
             val fee: Tokens,
             val from: ByteArray,
-            val allowance_e8s: BigInteger,
+            val allowance_e8s: ICPBigInteger,
             val allowance: Tokens,
             val expected_allowance: Tokens?,
             val expires_at: TimeStamp?,
@@ -449,7 +449,7 @@ object LedgerCanister {
     sealed class Icrc21Error {
         class GenericError(
             val description: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): Icrc21Error()
         class InsufficientPayment(val errorInfo: ErrorInfo): Icrc21Error()
         class UnsupportedCanisterCall(val errorInfo: ErrorInfo): Icrc21Error()
@@ -514,8 +514,8 @@ object LedgerCanister {
      * type MetadataValue = variant { Int : int; Nat : nat; Blob : blob; Text : text };
      */
     sealed class MetadataValue {
-        class Int(val bigInteger: BigInteger): MetadataValue()
-        class Nat(val bigInteger: BigInteger): MetadataValue()
+        class Int(val bigInteger: ICPBigInteger): MetadataValue()
+        class Nat(val bigInteger: ICPBigInteger): MetadataValue()
         class Blob(val byteArray: ByteArray): MetadataValue()
         class Text(val string: String): MetadataValue()
     }
@@ -563,7 +563,7 @@ object LedgerCanister {
      * type Result = variant { Ok : nat; Err : TransferError };
      */
     sealed class Result {
-        class Ok(val bigInteger: BigInteger): Result()
+        class Ok(val bigInteger: ICPBigInteger): Result()
         class Err(val transferError: TransferError): Result()
     }
 
@@ -579,7 +579,7 @@ object LedgerCanister {
      * type Result_2 = variant { Ok : nat; Err : ApproveError };
      */
     sealed class Result_2 {
-        class Ok(val bigInteger: BigInteger): Result_2()
+        class Ok(val bigInteger: ICPBigInteger): Result_2()
         class Err(val approveError: ApproveError): Result_2()
     }
 
@@ -587,7 +587,7 @@ object LedgerCanister {
      * type Result_3 = variant { Ok : nat; Err : TransferFromError };
      */
     sealed class Result_3 {
-        class Ok(val bigInteger: BigInteger): Result_3()
+        class Ok(val bigInteger: ICPBigInteger): Result_3()
         class Err(val transferFromError: TransferFromError): Result_3()
     }
 
@@ -675,11 +675,11 @@ object LedgerCanister {
      */
     class TransferArg(
         val to: Account,
-        val fee: BigInteger?,
+        val fee: ICPBigInteger?,
         val memo: ByteArray?,
         val from_subaccount: ByteArray?,
         val created_at_time: ULong?,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
 
     /**
@@ -716,15 +716,15 @@ object LedgerCanister {
     sealed class TransferError {
         class GenericError(
             val message: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): TransferError()
         data object TemporarilyUnavailable : TransferError()
-        class BadBurn(val min_burn_amount: BigInteger): TransferError()
-        class Duplicate(val duplicate_of: BigInteger): TransferError()
-        class BadFee(val expected_fee: BigInteger): TransferError()
+        class BadBurn(val min_burn_amount: ICPBigInteger): TransferError()
+        class Duplicate(val duplicate_of: ICPBigInteger): TransferError()
+        class BadFee(val expected_fee: ICPBigInteger): TransferError()
         class CreatedInFuture(val ledger_time: ULong): TransferError()
         data object TooOld : TransferError()
-        class InsufficientFunds(val balance: BigInteger): TransferError()
+        class InsufficientFunds(val balance: ICPBigInteger): TransferError()
     }
 
     /**
@@ -764,12 +764,12 @@ object LedgerCanister {
      */
     class TransferFromArgs(
         val to: Account,
-        val fee: BigInteger?,
+        val fee: ICPBigInteger?,
         val spender_subaccount: ByteArray?,
         val from: Account,
         val memo: ByteArray?,
         val created_at_time: ULong?,
-        val amount: BigInteger
+        val amount: ICPBigInteger
     )
 
     /**
@@ -788,16 +788,16 @@ object LedgerCanister {
     sealed class TransferFromError {
         class GenericError(
             val message: String,
-            val error_code: BigInteger
+            val error_code: ICPBigInteger
         ): TransferFromError()
         data object TemporarilyUnavailable : TransferFromError()
-        class InsufficientAllowance(val allowance: BigInteger): TransferFromError()
-        class BadBurn(val min_burn_amount: BigInteger): TransferFromError()
-        class Duplicate(val duplicate_of: BigInteger): TransferFromError()
-        class BadFee(val expected_fee: BigInteger): TransferFromError()
+        class InsufficientAllowance(val allowance: ICPBigInteger): TransferFromError()
+        class BadBurn(val min_burn_amount: ICPBigInteger): TransferFromError()
+        class Duplicate(val duplicate_of: ICPBigInteger): TransferFromError()
+        class BadFee(val expected_fee: ICPBigInteger): TransferFromError()
         class CreatedInFuture(val ledger_time: ULong): TransferFromError()
         data object TooOld : TransferFromError()
-        class InsufficientFunds(val balance: BigInteger): TransferFromError()
+        class InsufficientFunds(val balance: ICPBigInteger): TransferFromError()
     }
 
     /**
@@ -965,7 +965,7 @@ object LedgerCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_balance_of",
                 canister = canister
@@ -1009,7 +1009,7 @@ object LedgerCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_fee",
                 canister = canister
@@ -1140,7 +1140,7 @@ object LedgerCanister {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_total_supply",
                 canister = canister

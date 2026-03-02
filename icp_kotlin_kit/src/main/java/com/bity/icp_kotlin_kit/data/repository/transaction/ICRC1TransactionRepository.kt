@@ -12,7 +12,7 @@ import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactio
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
 import com.bity.icp_kotlin_kit.domain.repository.TransactionRepository
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class ICRC1TransactionRepository(
     private val icpToken: ICPToken,
@@ -27,7 +27,7 @@ class ICRC1TransactionRepository(
                 subaccount = account.subAccountId
             ),
             start = null,
-            max_results = BigInteger("1000000")
+            max_results = ICPBigInteger.parseDecimal("1000000")
         )
         val transactions = ICRC1IndexCanister.ICRC1IndexCanisterService(indexCanister)
             .get_account_transactions(getAccountTransactionsArgs)
@@ -42,8 +42,8 @@ class ICRC1TransactionRepository(
     private fun ICRC1IndexCanister.TransactionWithId.toDataModel(): ICPTokenTransaction? {
 
         val operation: ICPTokenTransactionOperation
-        val amount: BigInteger
-        val fee: BigInteger
+        val amount: ICPBigInteger
+        val fee: ICPBigInteger
         val spender: ICPTokenTransactionDestination?
         val created: ULong?
         val icrc1Memo: ByteArray?
@@ -55,7 +55,7 @@ class ICRC1TransactionRepository(
                     from = getDestinationAccount(burn.from)
                 )
                 amount = burn.amount
-                fee = BigInteger.ZERO
+                fee = ICPBigInteger.valueOf(0)
                 spender = burn.spender?.let { getDestinationAccount(it) }
                 created = burn.created_at_time
                 icrc1Memo = burn.memo?.map { it.toByte() }?.toByteArray()
@@ -69,7 +69,7 @@ class ICRC1TransactionRepository(
                     expires = approve.expires_at?.toLong()
                 )
                 amount = approve.amount
-                fee = BigInteger.ZERO
+                fee = ICPBigInteger.valueOf(0)
                 spender = getDestinationAccount(approve.spender)
                 created = approve.created_at_time
                 icrc1Memo = approve.memo?.map { it.toByte() }?.toByteArray()
@@ -82,7 +82,7 @@ class ICRC1TransactionRepository(
                     to = getDestinationAccount(transfer.to)
                 )
                 amount = transfer.amount
-                fee = transfer.fee ?: BigInteger.ZERO
+                fee = transfer.fee ?: ICPBigInteger.valueOf(0)
                 spender = transfer.spender?.let { getDestinationAccount(it) }
                 created = transfer.created_at_time
                 icrc1Memo = transfer.memo?.map { it.toByte() }?.toByteArray()
@@ -94,7 +94,7 @@ class ICRC1TransactionRepository(
                     to = getDestinationAccount(mint.to)
                 )
                 amount = mint.amount
-                fee = BigInteger.ZERO
+                fee = ICPBigInteger.valueOf(0)
                 spender = null
                 created = mint.created_at_time
                 icrc1Memo = mint.memo?.map { it.toByte() }?.toByteArray()

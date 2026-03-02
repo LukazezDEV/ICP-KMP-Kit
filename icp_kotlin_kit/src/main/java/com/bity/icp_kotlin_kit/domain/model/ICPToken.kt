@@ -1,8 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model
 
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
-import java.math.BigDecimal
-import java.math.BigInteger
 
 data class ICPToken(
     val standard: ICPTokenStandard,
@@ -13,8 +11,6 @@ data class ICPToken(
     val spam: Boolean,
     val logo: String?,
 ) {
-    fun decimal(amount: BigInteger): BigDecimal {
-        val divisor = BigDecimal.TEN.pow(decimals)
-        return amount.toBigDecimal().divide(divisor)
-    }
+    fun decimal(amount: ICPBigInteger): ICPDecimal =
+        ICPDecimal(amount, decimals)
 }

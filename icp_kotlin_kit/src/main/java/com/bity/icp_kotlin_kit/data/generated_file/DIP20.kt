@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.generated_file
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
@@ -41,13 +41,13 @@ object DIP20 {
         val decimals: UByte,
 
         // token total supply
-        val totalSupply: BigInteger,
+        val totalSupply: ICPBigInteger,
 
         // token owner
         val owner: ICPPrincipalApiModel,
 
         // fee for update calls
-        val fee: BigInteger
+        val fee: ICPBigInteger
     )
 
     /**
@@ -88,7 +88,7 @@ object DIP20 {
     sealed class TxReceipt {
 
         class Ok(
-            val bigInteger: BigInteger
+            val bigInteger: ICPBigInteger
         ): TxReceipt()
 
         class Err(
@@ -152,11 +152,11 @@ object DIP20 {
         val op: Operation,
 
         // transaction index
-        val index: BigInteger,
+        val index: ICPBigInteger,
         val from: ICPPrincipalApiModel,
         val to: ICPPrincipalApiModel,
-        val amount: BigInteger,
-        val fee: BigInteger,
+        val amount: ICPBigInteger,
+        val fee: ICPBigInteger,
         val timestamp: TimeStamp,
         val status: TransactionStatus
     )
@@ -261,7 +261,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "totalSupply",
                 canister = canister
@@ -284,7 +284,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "balanceOf",
                 canister = canister
@@ -310,7 +310,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "allowance",
                 canister = canister
@@ -357,7 +357,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "historySize",
                 canister = canister
@@ -377,7 +377,7 @@ object DIP20 {
         // Returns transaction detail of the transaction identified by index.
         // If the index is out of range, the execution traps. Transactions are indexed from zero.
         suspend fun getTransaction (
-            index: BigInteger,
+            index: ICPBigInteger,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -404,8 +404,8 @@ object DIP20 {
         // To fend off DoS attacks, this function is allowed to trap, if limit is greater than the limit allowed by the token.
         // This function is also allowed to trap if start + limit > historySize()
         suspend fun getTransactions (
-            start: BigInteger,
-            limit: BigInteger,
+            start: ICPBigInteger,
+            limit: ICPBigInteger,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -435,8 +435,8 @@ object DIP20 {
         // Implementations are allowed to return less TxRecords than requested to fend off DoS attacks.
         suspend fun getUserTransactions (
             who: ICPPrincipalApiModel,
-            start: BigInteger,
-            limit: BigInteger,
+            start: ICPBigInteger,
+            limit: ICPBigInteger,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -467,7 +467,7 @@ object DIP20 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "getUserTransactionAmount",
                 canister = canister
@@ -489,7 +489,7 @@ object DIP20 {
         // Transfers value amount of tokens to user to, returns a TxReceipt which contains the transaction index or an error message.
         suspend fun transfer (
             to: ICPPrincipalApiModel,
-            value: BigInteger,
+            value: ICPBigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
         ): TxReceipt {
@@ -518,7 +518,7 @@ object DIP20 {
         suspend fun transferFrom (
             from: ICPPrincipalApiModel,
             to: ICPPrincipalApiModel,
-            value: BigInteger,
+            value: ICPBigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
         ): TxReceipt {
@@ -547,7 +547,7 @@ object DIP20 {
         // There is no upper limit for value.
         suspend fun approve (
             spender: ICPPrincipalApiModel,
-            value: BigInteger,
+            value: ICPBigInteger,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
         ): TxReceipt {

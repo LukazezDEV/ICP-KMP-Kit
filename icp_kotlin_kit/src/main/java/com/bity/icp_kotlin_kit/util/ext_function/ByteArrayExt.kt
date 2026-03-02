@@ -1,26 +1,21 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.math.BigInteger
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 fun ByteArray.toHexString(): String =
-    joinToString(separator = "") {
-        it.toInt()
-            .and(0xff)
-            .toString(16)
-            .padStart(2, '0')
-    }
+    joinToString("") { "%02x".format(it) }
 
-fun ByteArray.toShort(): Short {
-    val bb = ByteBuffer.wrap(this)
-    bb.order(ByteOrder.BIG_ENDIAN)
-    return bb.short
-}
+// Little-endian conversion
+fun ByteArray.toShort(): Short =
+    ((this[1].toInt() and 0xFF) shl 8 or
+            (this[0].toInt() and 0xFF)).toShort()
 
 fun ByteArray.toInt(): Int =
-    toHexString().toInt(16)
+    (this[3].toInt() and 0xFF shl 24) or
+            (this[2].toInt() and 0xFF shl 16) or
+            (this[1].toInt() and 0xFF shl 8) or
+            (this[0].toInt() and 0xFF)
 
 fun ByteArray?.toLong(): Long =
-    if (this == null || this.isEmpty()) 0 else
-        BigInteger(1, this).toLong()
+    if (this == null || this.isEmpty()) 0L
+    else ICPBigInteger.fromSignMagnitude(1, this).toLong()

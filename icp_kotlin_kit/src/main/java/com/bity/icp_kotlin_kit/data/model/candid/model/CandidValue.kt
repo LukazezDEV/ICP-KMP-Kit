@@ -1,14 +1,14 @@
 package com.bity.icp_kotlin_kit.data.model.candid.model
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 sealed class CandidValue(
     val candidType: CandidType
 ) {
 
-    val natural8Value: BigInteger?
+    val natural8Value: ICPBigInteger?
         get() = (this as? Natural8)
-            ?.let { BigInteger.valueOf(it.uInt8.toLong()) }
+            ?.let { ICPBigInteger.valueOf(it.uInt8.toLong()) }
 
     data object Null : CandidValue(
         candidType = CandidType.Null
@@ -34,11 +34,11 @@ sealed class CandidValue(
         }
     }
 
-    data class Natural(val bigUInt: BigInteger) : CandidValue(
+    data class Natural(val bigUInt: ICPBigInteger) : CandidValue(
         candidType = CandidType.Natural
     )
 
-    data class Integer(val bigInt: BigInteger) : CandidValue(
+    data class Integer(val bigInt: ICPBigInteger) : CandidValue(
         candidType = CandidType.Integer
     )
 

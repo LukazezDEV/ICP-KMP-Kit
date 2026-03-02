@@ -10,16 +10,16 @@ import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.model.toDomainModel
 import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class DIP20TokenRepository(
     private val canister: DIP20.DIP20Service
 ): ICPTokenRepository {
 
-    override suspend fun fetchBalance(principal: ICPPrincipal): BigInteger =
+    override suspend fun fetchBalance(principal: ICPPrincipal): ICPBigInteger =
         this@DIP20TokenRepository.canister.balanceOf(principal.toDataModel())
 
-    override suspend fun fee(): BigInteger =
+    override suspend fun fee(): ICPBigInteger =
         fetchMetadata().fee
 
     override suspend fun fetchMetadata(): ICPTokenMetadata {

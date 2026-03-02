@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.generated_file
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
@@ -25,7 +25,7 @@ typealias TokenIdentifier__5 = String
 /**
  * type Time__2 = int;
  */
-typealias Time__2 = BigInteger
+typealias Time__2 = ICPBigInteger
 
 /**
  * type SubAccount = vec nat8;
@@ -45,12 +45,12 @@ typealias Extension__1 = String
 /**
  * type Balance__2 = nat;
  */
-typealias Balance__2 = BigInteger
+typealias Balance__2 = ICPBigInteger
 
 /**
  * type Balance = nat;
  */
-typealias CFTBalance = BigInteger
+typealias CFTBalance = ICPBigInteger
 
 /**
  * type AccountIdentifier__4 = text;

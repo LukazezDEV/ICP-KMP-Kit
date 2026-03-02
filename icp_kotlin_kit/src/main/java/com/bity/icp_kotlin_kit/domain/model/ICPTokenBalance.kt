@@ -1,11 +1,10 @@
 package com.bity.icp_kotlin_kit.domain.model
 
-import java.math.BigDecimal
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
 
 data class ICPTokenBalance(
     val token: ICPToken,
-    val balance: BigInteger
+    val balance: ICPBigInteger
 ) {
-    val decimalBalance: BigDecimal = token.decimal(balance)
+    val decimalBalance: ICPDecimal = token.decimal(balance)
 }

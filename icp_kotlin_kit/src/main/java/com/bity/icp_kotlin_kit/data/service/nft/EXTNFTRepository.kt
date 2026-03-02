@@ -12,7 +12,7 @@ import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.service.NFTCollectionIdService
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 open class EXTNFTRepository(
     private val canister: ICPPrincipal,
@@ -25,11 +25,11 @@ open class EXTNFTRepository(
             .toDataModel(canister)
 
     override suspend fun fetchIds(
-        prev: BigInteger?,
-        take: BigInteger?
-    ): List<BigInteger> {
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?
+    ): List<ICPBigInteger> {
         val tokens = service.getTokens()
-        return tokens.map { BigInteger("${it.tokenIndex}") }
+        return tokens.map { ICPBigInteger.parseDecimal("${it.tokenIndex}") }
     }
 
     override suspend fun fetchNFTs(
@@ -52,7 +52,7 @@ open class EXTNFTRepository(
 
     override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ) : ICPNFTCollectionItem {
         val nfts = fetchNFTs(collectionPrincipal)
         return nfts.find { it.id == nftId }
@@ -64,7 +64,7 @@ open class EXTNFTRepository(
 
     override suspend fun fetchOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ): ICPPrincipal? = null
 
     private fun getNFTMetadata(nftId: String): ICPNFTEXTMetadata =
@@ -95,7 +95,7 @@ open class EXTNFTRepository(
     private fun Result_1.ok._ArrayClass.toDataModel(canister: ICPPrincipal): ICPNFTDetails {
         val nftId = idService.getNFTCollectionItemId(
             canisterBytes = canister.bytes,
-            tokenIndex = BigInteger(tokenIndex.toString())
+            tokenIndex = ICPBigInteger.parseDecimal(tokenIndex.toString())
         )
         return ICPNFTDetails(
             name = "#$tokenIndex",

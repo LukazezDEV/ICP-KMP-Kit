@@ -4,7 +4,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPNftStandard
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPTokenStandard
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 sealed class ICPKitException(message: String? = null) : Exception(message) {
 
@@ -14,7 +14,7 @@ sealed class ICPKitException(message: String? = null) : Exception(message) {
 
     class NFTNotFound(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger
+        nftId: ICPBigInteger
     ): ICPKitException("NFT $nftId not found in collection $collectionPrincipal")
 
     class InvalidNFTToken(

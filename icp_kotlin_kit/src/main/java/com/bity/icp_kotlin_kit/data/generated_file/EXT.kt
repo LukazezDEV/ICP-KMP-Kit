@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.generated_file
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
@@ -20,8 +20,8 @@ private typealias TokenIndex = UInt
 private typealias TokenIdentifier__2 = String
 private typealias TokenIdentifier__1 = String
 private typealias TokenIdentifier = String
-private typealias Time = BigInteger
-private typealias Supply = BigInteger
+private typealias Time = ICPBigInteger
+private typealias Supply = ICPBigInteger
 private typealias SubAccount__2 = Array<UByte>
 private typealias SubAccount__1 = Array<UByte>
 private typealias EXTSubAccount = Array<UByte>
@@ -35,7 +35,7 @@ private typealias Extension = String
 private typealias CanisterMemoryAggregatedData = Array<ULong>
 private typealias CanisterHeapMemoryAggregatedData = Array<ULong>
 private typealias CanisterCyclesAggregatedData = Array<ULong>
-private typealias Balance = BigInteger
+private typealias Balance = ICPBigInteger
 private typealias Airdrop = Array<String>
 private typealias AccountIdentifier__2 = String
 private typealias AccountIdentifier__1 = String
@@ -109,7 +109,7 @@ class Transaction(
     val bytes: Array<UByte>,
     val closed: Time?,
     val from: AccountIdentifier__1,
-    val id: BigInteger,
+    val id: ICPBigInteger,
     val initiated: Time,
     val memo: ByteArray?,
     val price: ULong,
@@ -150,7 +150,7 @@ sealed class StreamingStrategy {
 
 class StreamingCallbackToken(
     val content_encoding: String,
-    val index: BigInteger,
+    val index: ICPBigInteger,
     val key: String
 )
 
@@ -190,7 +190,7 @@ class StreamingCallback(
 }
 
 class Reward(
-    val amount: BigInteger,
+    val amount: ICPBigInteger,
     val category: TypeReward,
     val collection: ICPPrincipalApiModel,
     val date: Time
@@ -437,7 +437,7 @@ class HourlyMetricsData(
     val canisterCycles: CanisterCyclesAggregatedData,
     val canisterHeapMemorySize: CanisterHeapMemoryAggregatedData,
     val canisterMemorySize: CanisterMemoryAggregatedData,
-    val timeMillis: BigInteger,
+    val timeMillis: ICPBigInteger,
     val updateCalls: UpdateCallsAggregatedData
 )
 
@@ -447,8 +447,8 @@ class HeaderField(
 )
 
 class GetMetricsParameters(
-    val dateFromMillis: BigInteger,
-    val dateToMillis: BigInteger,
+    val dateFromMillis: ICPBigInteger,
+    val dateToMillis: ICPBigInteger,
     val granularity: MetricsGranularity
 )
 
@@ -507,7 +507,7 @@ class DailyMetricsData(
     val canisterCycles: NumericEntity,
     val canisterHeapMemorySize: NumericEntity,
     val canisterMemorySize: NumericEntity,
-    val timeMillis: BigInteger,
+    val timeMillis: ICPBigInteger,
     val updateCalls: ULong
 )
 
@@ -712,7 +712,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger {
+    ): ICPBigInteger {
 
         val icpQuery = ICPQuery(
             methodName = "availableCycles",
@@ -814,7 +814,7 @@ class EXTService(
 
     suspend fun create_accessory                    (
         string: String,
-        bigInteger: BigInteger,
+        bigInteger: ICPBigInteger,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
     ): Result__1_1 {
@@ -1358,7 +1358,7 @@ class EXTService(
 
     suspend fun record_icps                    (
         accountIdentifier__2: AccountIdentifier__2,
-        bigInteger: BigInteger,
+        bigInteger: ICPBigInteger,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
     ) {
@@ -1404,7 +1404,7 @@ class EXTService(
 
     suspend fun record_token                    (
         accountIdentifier__2: AccountIdentifier__2,
-        bigInteger: BigInteger,
+        bigInteger: ICPBigInteger,
         string: String,
         uByte: UByte,
         iCPPrincipalApiModel: ICPPrincipalApiModel,
@@ -1486,7 +1486,7 @@ class EXTService(
     }
 
     suspend fun setMaxMessagesCount                    (
-        bigInteger: BigInteger,
+        bigInteger: ICPBigInteger,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
     ) {
@@ -1528,7 +1528,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger {
+    ): ICPBigInteger {
 
         val icpQuery = ICPQuery(
             methodName = "size",
@@ -1549,7 +1549,7 @@ class EXTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): NTuple7<ULong, ULong, ULong, ULong, BigInteger, BigInteger, BigInteger> {
+    ): NTuple7<ULong, ULong, ULong, ULong, ICPBigInteger, ICPBigInteger, ICPBigInteger> {
 
         val icpQuery = ICPQuery(
             methodName = "stats",
@@ -1568,9 +1568,9 @@ class EXTService(
             b = CandidDecoder.decodeNotNull<ULong>(result[1]),
             c = CandidDecoder.decodeNotNull<ULong>(result[2]),
             d = CandidDecoder.decodeNotNull<ULong>(result[3]),
-            e = CandidDecoder.decodeNotNull<BigInteger>(result[4]),
-            f = CandidDecoder.decodeNotNull<BigInteger>(result[5]),
-            g = CandidDecoder.decodeNotNull<BigInteger>(result[6])
+            e = CandidDecoder.decodeNotNull<ICPBigInteger>(result[4]),
+            f = CandidDecoder.decodeNotNull<ICPBigInteger>(result[5]),
+            g = CandidDecoder.decodeNotNull<ICPBigInteger>(result[6])
         )
     }
 

@@ -12,7 +12,7 @@ import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class TokenRepositoryImpl(
     private val canister: ICRC1Oracle.ICRC1OracleCanister,

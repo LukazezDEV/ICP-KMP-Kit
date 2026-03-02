@@ -6,7 +6,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 open class OrigynNFTRepository(
     private val canister: OrigynNFT.Nft_Canister
@@ -28,9 +28,9 @@ open class OrigynNFTRepository(
     }
 
     override suspend fun fetchIds(
-        prev: BigInteger?,
-        take: BigInteger?
-    ): List<BigInteger> {
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?
+    ): List<ICPBigInteger> {
         TODO("Not yet implemented")
     }
 
@@ -40,14 +40,14 @@ open class OrigynNFTRepository(
 
     override suspend fun fetchOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ): ICPPrincipal? {
         TODO("Not yet implemented")
     }
 
     override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ) : ICPNFTCollectionItem {
         TODO("Not yet implemented")
     }

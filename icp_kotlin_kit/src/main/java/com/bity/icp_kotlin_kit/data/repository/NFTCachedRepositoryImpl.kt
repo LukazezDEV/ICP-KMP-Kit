@@ -15,7 +15,7 @@ import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class NFTCachedRepositoryImpl(
     private val dabCanister: DABNFT.DABNFTService,
@@ -44,7 +44,7 @@ internal class NFTCachedRepositoryImpl(
 
     override suspend fun fetchNFTCollectionTokenOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ): ICPPrincipal? {
         val nftRepository = getNFTRepositoryForCollection(collectionPrincipal)
         return nftRepository.fetchOwner(

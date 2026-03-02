@@ -6,7 +6,7 @@ import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class FetchTokenBalance internal constructor(
     private val tokenRepositoryFactory: TokenRepositoryFactory
@@ -14,7 +14,7 @@ class FetchTokenBalance internal constructor(
     suspend operator fun invoke(
         token: ICPToken,
         principal: ICPPrincipal
-    ): Result<BigInteger> {
+    ): Result<ICPBigInteger> {
         val repository = try {
             tokenRepositoryFactory.createRepository(
                 standard = token.standard,

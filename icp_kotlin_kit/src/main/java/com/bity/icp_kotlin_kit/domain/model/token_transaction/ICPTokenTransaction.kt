@@ -1,15 +1,15 @@
 package com.bity.icp_kotlin_kit.domain.model.token_transaction
 
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class ICPTokenTransaction(
-    val blockIndex: BigInteger,
+    val blockIndex: ICPBigInteger
     val operation: ICPTokenTransactionOperation,
-    val memo: BigInteger?,
+    val memo: ICPBigInteger?,
     val icrc1Memo: ByteArray?,
-    val amount: BigInteger,
-    val fee: BigInteger,
+    val amount: ICPBigInteger,
+    val fee: ICPBigInteger,
     val createdNanos: ULong?,
     val timeStampNanos: ULong?,
     val spender: ICPTokenTransactionDestination?,

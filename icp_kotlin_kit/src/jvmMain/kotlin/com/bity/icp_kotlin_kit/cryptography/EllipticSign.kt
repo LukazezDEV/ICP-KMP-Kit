@@ -12,12 +12,12 @@ import org.bouncycastle.math.ec.ECAlgorithms
 import org.bouncycastle.math.ec.ECCurve
 import org.bouncycastle.math.ec.ECPoint
 import org.bouncycastle.util.BigIntegers
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 object EllipticSign {
 
     private val CURVE: ECDomainParameters
-    private val HALF_CURVE_ORDER: BigInteger
+    private val HALF_CURVE_ORDERICPBigInteger
 
     init {
         val params = SECNamedCurves.getByName("secp256k1")
@@ -28,7 +28,7 @@ object EllipticSign {
     operator fun invoke(
         message: ByteArray,
         domain: String,
-        key: BigInteger
+        key: ICPBigInteger
     ): ByteArray {
         val icpDomain = ICPDomainSeparator(domain)
         val domainSeparatedData = icpDomain.domainSeparatedData(message)
@@ -41,7 +41,7 @@ object EllipticSign {
 
     private fun signMessage(
         messageToSign: ByteArray,
-        privateKey: BigInteger
+        privateKey: ICPBigInteger
     ): ByteArray {
         val signer = ECDSASigner(HMacDSAKCalculator(SHA256Digest()))
         val privateKeyParams = ECPrivateKeyParameters(privateKey, CURVE)
@@ -74,9 +74,9 @@ object EllipticSign {
         return rsigPad + ssigPad + byteArrayOf(recId.toByte())
     }
 
-    private fun recoverPubBytesFromSignature(recId: Int, r: BigInteger, s: BigInteger, messageHash: ByteArray?): ByteArray? {
+    private fun recoverPubBytesFromSignature(recId: Int, r: ICPBigInteger, s: ICPBigInteger messageHash: ByteArray?): ByteArray? {
         val n = CURVE.n
-        val i = BigInteger.valueOf(recId.toLong() / 2)
+        val i = ICPBigInteger.valueOf(recId.toLong() / 2)
         val x = r.add(i.multiply(n))
         val curve = CURVE.curve as ECCurve.Fp
         val prime = curve.q
@@ -87,9 +87,9 @@ object EllipticSign {
 
         if (!R.multiply(n).isInfinity)
             return null
-        val e = BigInteger(1, messageHash)
+        val e = ICPBigInteger.fromSignMagnitude(1, messageHash)
 
-        val eInv = BigInteger.ZERO.subtract(e).mod(n)
+        val eInv = ICPBigInteger.valueOf(0).subtract(e).mod(n)
         val rInv = r.modInverse(n)
         val srInv = rInv.multiply(s).mod(n)
         val eInvrInv = rInv.multiply(eInv).mod(n)
@@ -98,7 +98,7 @@ object EllipticSign {
         return if (q.isInfinity) null else q.getEncoded(false)
     }
 
-    private fun decompressKey(xBN: BigInteger, yBit: Boolean): ECPoint {
+    private fun decompressKey(xBN: ICPBigInteger, yBit: Boolean): ECPoint {
         val x9 = X9IntegerConverter()
         val compEnc = x9.integerToBytes(xBN, 1 + x9.getByteLength(CURVE.curve))
         compEnc[0] = (if (yBit) 0x03 else 0x02).toByte()

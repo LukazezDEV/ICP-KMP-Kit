@@ -3,13 +3,13 @@ package com.bity.icp_kotlin_kit.domain.use_case.transaction
 import com.bity.icp_kotlin_kit.domain.factory.TokenRepositoryFactory
 import com.bity.icp_kotlin_kit.domain.model.ICPToken
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class FetchTokenTransactionFee internal constructor(
     private val tokenRepositoryFactory: TokenRepositoryFactory
 ) {
 
-    suspend operator fun invoke(token: ICPToken): Result<BigInteger> {
+    suspend operator fun invoke(token: ICPToken): Result<ICPBigInteger> {
         val repository = tokenRepositoryFactory.createRepository(
             standard = token.standard,
             canister = token.canister

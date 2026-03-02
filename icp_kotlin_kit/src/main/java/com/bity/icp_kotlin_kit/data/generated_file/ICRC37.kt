@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.generated_file
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
@@ -35,13 +35,13 @@ object ICRC37 {
     )
 
     class ApproveTokenArg(
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger,
         val approval_info: ApprovalInfo
     )
 
     sealed class ApproveTokenResult {
         class Ok(
-            val bigInteger: BigInteger
+            val bigIntegerICPBigInteger
         ): ApproveTokenResult()
         class Err(
             val approveTokenError: ApproveTokenError
@@ -56,12 +56,12 @@ object ICRC37 {
         class CreatedInFuture(val ledger_time: ULong): ApproveTokenError()
 
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): ApproveTokenError()
 
         class GenericBatchError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): ApproveTokenError()
     }
@@ -71,7 +71,7 @@ object ICRC37 {
     )
 
     sealed class ApproveCollectionResult {
-        class Ok(val bigInteger: BigInteger): ApproveCollectionResult()
+        class Ok(val bigInteger: ICPBigInteger) : ApproveCollectionResult()
         class Err(val approveCollectionError: ApproveCollectionError): ApproveCollectionResult()
     }
 
@@ -81,12 +81,12 @@ object ICRC37 {
         class CreatedInFuture(val ledger_time: ULong): ApproveCollectionError()
 
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): ApproveCollectionError()
 
         class GenericBatchError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): ApproveCollectionError()
     }
@@ -96,13 +96,13 @@ object ICRC37 {
         val spender: Account?,
         // null refers to the default subaccount
         val from_subaccount: ByteArray?,
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger,
         val memo: ByteArray?,
         val created_at_time: ULong?
     )
 
     sealed class RevokeTokenApprovalResponse {
-        class Ok(val bigInteger: BigInteger): RevokeTokenApprovalResponse()
+        class Ok(val bigInteger: ICPBigInteger) : RevokeTokenApprovalResponse()
         class Err(val revokeTokenApprovalError: RevokeTokenApprovalError): RevokeTokenApprovalResponse()
     }
     sealed class RevokeTokenApprovalError {
@@ -113,12 +113,12 @@ object ICRC37 {
         class CreatedInFuture(val ledger_time: ULong): RevokeTokenApprovalError()
 
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): RevokeTokenApprovalError()
 
         class GenericBatchError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): RevokeTokenApprovalError()
     }
@@ -133,7 +133,7 @@ object ICRC37 {
     )
 
     sealed class RevokeCollectionApprovalResult {
-        class Ok(val bigInteger: BigInteger): RevokeCollectionApprovalResult()
+        class Ok(val bigInteger: ICPBigInteger) : RevokeCollectionApprovalResult()
         class Err(val revokeCollectionApprovalError: RevokeCollectionApprovalError): RevokeCollectionApprovalResult()
     }
 
@@ -142,11 +142,11 @@ object ICRC37 {
         data object TooOld : RevokeCollectionApprovalError()
         class CreatedInFuture(val ledger_time: ULong): RevokeCollectionApprovalError()
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): RevokeCollectionApprovalError()
         class GenericBatchError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): RevokeCollectionApprovalError()
     }
@@ -154,11 +154,11 @@ object ICRC37 {
     class IsApprovedArg(
         val spender: Account,
         val from_subaccount: ByteArray?,
-        val token_id: BigInteger
+        val token_idICPBigInteger
     )
 
     class TokenApproval(
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger,
         val approval_info: ApprovalInfo
     )
 
@@ -167,13 +167,13 @@ object ICRC37 {
         val spender_subaccount: ByteArray?,
         val from: Account,
         val to: Account,
-        val token_id: BigInteger,
+        val token_id: ICPBigInteger,
         val memo: ByteArray?,
         val created_at_time: ULong?
     )
 
     sealed class TransferFromResult {
-        class Ok(val bigInteger: BigInteger): TransferFromResult()
+        class Ok(val bigInteger: ICPBigInteger) : TransferFromResult()
         class Err(val transferFromError: TransferFromError): TransferFromResult()
     }
 
@@ -183,13 +183,13 @@ object ICRC37 {
         data object NonExistingTokenId : TransferFromError()
         data object TooOld : TransferFromError()
         class CreatedInFuture(val ledger_time: ULong): TransferFromError()
-        class Duplicate(val duplicate_of: BigInteger): TransferFromError()
+        class Duplicate(val duplicate_of: ICPBigInteger) : TransferFromError()
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): TransferFromError()
         class GenericBatchError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): TransferFromError()
     }
@@ -201,7 +201,7 @@ object ICRC37 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger? {
+        ): ICPBigInteger? {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_max_approvals_per_token_or_collection",
                 canister = canister
@@ -219,7 +219,7 @@ object ICRC37 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger? {
+        ): ICPBigInteger? {
             val icpQuery = ICPQuery(
                 methodName = "icrc37_max_revoke_approvals",
                 canister = canister
@@ -351,9 +351,9 @@ object ICRC37 {
         }
 
         suspend fun icrc37_get_token_approvals (
-            token_id: BigInteger,
+            token_id: ICPBigInteger,
             prev: TokenApproval?,
-            take: BigInteger?,
+            take: ICPBigInteger?,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -366,7 +366,7 @@ object ICRC37 {
                 values = listOf(
                     ValueToEncode(
                         arg = token_id,
-                        expectedClass = BigInteger::class,
+                        expectedClass = ICPBigInteger::class,
                         expectedClassNullable = false
                     ),
                     ValueToEncode(
@@ -376,7 +376,7 @@ object ICRC37 {
                     ),
                     ValueToEncode(
                         arg = take,
-                        expectedClass = BigInteger::class,
+                        expectedClass = ICPBigInteger::class,
                         expectedClassNullable = true
                     )
                 ),
@@ -390,7 +390,7 @@ object ICRC37 {
         suspend fun icrc37_get_collection_approvals (
             owner: Account,
             prev: CollectionApproval?,
-            take: BigInteger?,
+            take: ICPBigInteger?,
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
@@ -413,7 +413,7 @@ object ICRC37 {
                     ),
                     ValueToEncode(
                         arg = take,
-                        expectedClass = BigInteger::class,
+                        expectedClass = ICPBigInteger::class,
                         expectedClassNullable = true
                     )
                 ),

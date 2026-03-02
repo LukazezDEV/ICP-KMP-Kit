@@ -11,14 +11,14 @@ import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransactionOperati
 import com.bity.icp_kotlin_kit.domain.repository.LedgerCanisterRepository
 import com.bity.icp_kotlin_kit.domain.model.request.TransferICPRequest
 import com.bity.icp_kotlin_kit.util.icpTimestampNow
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class LedgerCanisterRepositoryImpl(
     private val ledgerCanisterService: LedgerCanister.LedgerCanisterService
 ): LedgerCanisterRepository {
 
     @OptIn(ExperimentalStdlibApi::class)
-    override suspend fun transferICP(request: TransferICPRequest): BigInteger {
+    override suspend fun transferICP(request: TransferICPRequest): ICPBigInteger{
         val transferArgs = LedgerCanister.TransferArgs(
             to = request.receivingAddress.hexToByteArray(),
             fee = LedgerCanister.Tokens(request.fee.toLong().toULong()),
@@ -35,7 +35,7 @@ internal class LedgerCanisterRepositoryImpl(
 
         when(result) {
             is LedgerCanister.Result_6.Err -> throw result.transferError_1.toDataModel()
-            is LedgerCanister.Result_6.Ok -> return BigInteger(result.uLong.toString())
+            is LedgerCanister.Result_6.Ok -> return ICPBigInteger.parseDecimal(result.uLong.toString())
         }
     }
 
@@ -120,8 +120,8 @@ private fun LedgerCanister.CandidOperation.toDomainModel(): ICPBlockTransactionO
             ICPBlockTransactionOperation.Approve(
                 from = from,
                 allowance = allowance_e8s,
-                expectedAllowance = expected_allowance?.e8s?.let { BigInteger(it.toString()) },
-                fee = BigInteger(fee.e8s.toString()),
+                expectedAllowance = expected_allowance?.e8s?.let { ICPBigInteger.parseDecimal(it.toString()) },
+                fee = ICPBigInteger.parseDecimal(fee.e8s.toString()),
                 expiresAtNanos = expires_at?.timestamp_nanos,
                 spender = spender
             )
@@ -129,22 +129,22 @@ private fun LedgerCanister.CandidOperation.toDomainModel(): ICPBlockTransactionO
         is LedgerCanister.CandidOperation.Burn ->
             ICPBlockTransactionOperation.Burn(
                 from = from,
-                amount = BigInteger(amount.e8s.toString()),
+                amount = ICPBigInteger.parseDecimal(amount.e8s.toString()),
                 spender = spender
             )
 
         is LedgerCanister.CandidOperation.Mint ->
             ICPBlockTransactionOperation.Mint(
                 to = to,
-                amount = BigInteger(amount.e8s.toString())
+                amount = ICPBigInteger.parseDecimal(amount.e8s.toString())
             )
 
         is LedgerCanister.CandidOperation.Transfer ->
             ICPBlockTransactionOperation.Transfer(
                 from = from,
                 to = to,
-                amount = BigInteger(amount.e8s.toString()),
-                fee = BigInteger(fee.e8s.toString()),
+                amount = ICPBigInteger.parseDecimal(amount.e8s.toString()),
+                fee = ICPBigInteger.parseDecimal(fee.e8s.toString()),
                 spender = spender
             )
     }

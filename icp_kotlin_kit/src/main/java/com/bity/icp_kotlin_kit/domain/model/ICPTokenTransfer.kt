@@ -1,10 +1,10 @@
 package com.bity.icp_kotlin_kit.domain.model
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 sealed class ICPTokenTransfer {
     data class Height(
-        val height: BigInteger
+        val heightICPBigInteger
     ): ICPTokenTransfer()
     data class Amount(
         val amount: String

@@ -8,7 +8,7 @@ import com.bity.icp_kotlin_kit.util.ext_function.grouped
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.cbor.CBORFactory
 import com.google.common.io.BaseEncoding
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 object ICPCryptography {
 
@@ -59,7 +59,7 @@ object ICPCryptography {
 
     fun transactionHash(
         operation: ICPBlockTransactionOperation,
-        memo: BigInteger,
+        memo: ICPBigInteger,
         createdNanos: ULong
     ): ByteArray = transactionHash(
         ICPBlockTransaction(

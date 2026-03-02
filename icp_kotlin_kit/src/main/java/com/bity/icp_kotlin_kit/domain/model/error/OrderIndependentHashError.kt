@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.domain.model.error
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 sealed class OrderIndependentHashError(
     errorMessage: String? = null,
@@ -8,6 +8,6 @@ sealed class OrderIndependentHashError(
 ): Error(errorMessage, throwable) {
     class UnsupportedDataType(val value: Any): OrderIndependentHashError()
     class NonUtf8String(val string: String): OrderIndependentHashError()
-    class NonPositiveNumber(val number: BigInteger): OrderIndependentHashError()
+    class NonPositiveNumber(val number: ICPBigInteger): OrderIndependentHashError()
     class NonASCIIString(val value: ByteArray): OrderIndependentHashError()
 }

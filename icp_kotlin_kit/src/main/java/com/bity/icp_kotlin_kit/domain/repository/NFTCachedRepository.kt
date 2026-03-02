@@ -4,7 +4,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPNftCollection
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTCollectionItem
 import com.bity.icp_kotlin_kit.domain.model.nft.ICPNFTDetails
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal interface NFTCachedRepository {
     suspend fun fetchAllNFTsCollections(): List<ICPNftCollection>
@@ -12,7 +12,7 @@ internal interface NFTCachedRepository {
     suspend fun fetchCollectionTokens(collectionPrincipal: ICPPrincipal): List<ICPNFTCollectionItem>
     suspend fun fetchNFTCollectionTokenOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger
+        nftId: ICPBigInteger
     ): ICPPrincipal?
     suspend fun fetchUserTokenHoldings(icpPrincipal: ICPPrincipal): List<ICPNFTDetails>
 }

@@ -5,7 +5,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.ServiceMethod
 import com.bity.icp_kotlin_kit.cryptography.LEB128
 import com.bity.icp_kotlin_kit.util.ext_function.bytes
 import com.bity.icp_kotlin_kit.util.ext_function.joinedData
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal sealed class CandidEncodableValue {
     class DictionaryEncodableItem(
@@ -19,8 +19,8 @@ internal sealed class CandidEncodableValue {
 
     data object Null: CandidEncodableValue()
     class Bool(val bool: Boolean): CandidEncodableValue()
-    class Natural(val bigUInt: BigInteger): CandidEncodableValue()
-    class Integer(val bigInt: BigInteger): CandidEncodableValue()
+    class Natural(val bigUInt: ICPBigInteger): CandidEncodableValue()
+    class Integer(val bigInt: ICPBigInteger): CandidEncodableValue()
     class Natural8(val uInt8: UByte): CandidEncodableValue()
     class Natural16(val uInt16: UShort): CandidEncodableValue()
     class Natural32(val uInt32: UInt): CandidEncodableValue()

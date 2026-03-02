@@ -12,7 +12,7 @@ import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class ChainFusionToonisNFTRepository(
     private val canister: ICPPrincipal,
@@ -22,9 +22,9 @@ class ChainFusionToonisNFTRepository(
     private val objectMapper  = ObjectMapper().registerKotlinModule()
 
     override suspend fun fetchIds(
-        prev: BigInteger?,
-        take: BigInteger?,
-    ): List<BigInteger> {
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?,
+    ): List<ICPBigInteger> {
         TODO("Not yet implemented")
     }
 
@@ -60,7 +60,7 @@ class ChainFusionToonisNFTRepository(
 
     override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger,
     ) : ICPNFTCollectionItem {
         val args = arrayOf("$nftId".toUInt())
         val token = service.getTokensByIds(args)
@@ -73,11 +73,11 @@ class ChainFusionToonisNFTRepository(
 
     override suspend fun fetchOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger,
     ): ICPPrincipal? = null
 
     private fun ChainFusionToonis.CFTService.ArrayClass.toICPNFTCollectionItem() : ICPNFTCollectionItem {
-        val id = BigInteger("$tokenIndex__1")
+        val id = ICPBigInteger.parseDecimal("$tokenIndex__1")
         return ICPNFTCollectionItem(
             id = id,
             nftId = id.toString(),

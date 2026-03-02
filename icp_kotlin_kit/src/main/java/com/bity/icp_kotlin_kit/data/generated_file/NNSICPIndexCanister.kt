@@ -3,7 +3,7 @@ package com.bity.icp_kotlin_kit.data.generated_file
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
@@ -32,8 +32,8 @@ object NNSICPIndexCanister {
         // txid.
         val account: Account,
         // Maximum number of transactions to fetch.
-        val start: BigInteger?,
-        val max_results: BigInteger
+        val start: ICPBigInteger?,
+        val max_resultsICPBigInteger
     )
 
     class GetAccountIdentifierTransactionsError(
@@ -47,8 +47,8 @@ object NNSICPIndexCanister {
     )
 
     class GetBlocksRequest(
-        val start: BigInteger,
-        val length: BigInteger
+        val start: ICPBigInteger,
+        val length: ICPBigInteger
     )
 
     class GetBlocksResponse(

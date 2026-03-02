@@ -10,13 +10,13 @@ import com.bity.icp_kotlin_kit.domain.model.error.TransferException
 import com.bity.icp_kotlin_kit.domain.model.toDataModel
 import com.bity.icp_kotlin_kit.domain.repository.ICPTokenRepository
 import com.bity.icp_kotlin_kit.util.ext_function.toICPTimestamp
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class ICRC1TokenRepository(
     private val canister: ICRC1.ICRC1Service
 ): ICPTokenRepository {
 
-    override suspend fun fetchBalance(principal: ICPPrincipal): BigInteger {
+    override suspend fun fetchBalance(principal: ICPPrincipal): ICPBigInteger {
         val account = ICRC1.Account(
             owner = principal.toDataModel(),
             subaccount = null
@@ -30,7 +30,7 @@ internal class ICRC1TokenRepository(
         return buildICPTokenMetadata(metadata, totalSupply)
     }
 
-    override suspend fun fee(): BigInteger =
+    override suspend fun fee(): ICPBigInteger =
         this@ICRC1TokenRepository.canister.icrc1_fee()
 
     override suspend fun transfer(args: ICPTokenTransferArgs): ICPTokenTransfer {
@@ -58,7 +58,7 @@ internal class ICRC1TokenRepository(
 
     private fun buildICPTokenMetadata(
         metadata: Array<ICRC1.MetadataField>,
-        totalSupply: BigInteger
+        totalSupply: ICPBigInteger
     ): ICPTokenMetadata {
         return ICPTokenMetadata(
             name = getTextValue("icrc1:name", metadata),
@@ -91,7 +91,7 @@ internal class ICRC1TokenRepository(
     private fun getNatValue(
         key: String,
         metadata: Array<ICRC1.MetadataField>
-    ): BigInteger =
+    ): ICPBigInteger =
         (metadata.find { it.string == key }?.value as? ICRC1.Value.Nat)?.bigInteger
             ?: throw ICRC1TokenException.InvalidMetadataField(key)
 }

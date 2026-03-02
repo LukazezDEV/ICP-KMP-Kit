@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.generated_file
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPPrincipalApiModel
 import com.bity.icp_kotlin_kit.data.model.ValueToEncode
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
@@ -63,7 +63,7 @@ object ICRC1Oracle {
         val index: String?,
         val symbol: String,
         val decimals: UByte,
-        val fee: BigInteger
+        val fee: ICPBigInteger
     )
 
     /**
@@ -84,7 +84,7 @@ object ICRC1Oracle {
         val index: String?,
         val symbol: String,
         val decimals: UByte,
-        val fee: BigInteger
+        val fee: ICPBigInteger
     )
 
     class ICRC1OracleCanister(

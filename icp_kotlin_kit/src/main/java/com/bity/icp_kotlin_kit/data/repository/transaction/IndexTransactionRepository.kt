@@ -9,7 +9,7 @@ import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactio
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionDestination
 import com.bity.icp_kotlin_kit.domain.model.token_transaction.ICPTokenTransactionOperation
 import com.bity.icp_kotlin_kit.domain.repository.TransactionRepository
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class IndexTransactionRepository(
     private val icpToken: ICPToken,
@@ -23,7 +23,7 @@ internal class IndexTransactionRepository(
                 subaccount = account.subAccountId.map { it.toUByte() }.toTypedArray()
             ),
             start = null,
-            max_results = BigInteger("1000000")
+            max_results = ICPBigInteger.parseDecimal("1000000")
         )
         val transactions = indexCanister.get_account_transactions(getAccountTransactionsArgs)
         return when(transactions) {
@@ -43,19 +43,19 @@ internal class IndexTransactionRepository(
 
         val operation: ICPTokenTransactionOperation
         val spender: ICPTokenTransactionDestination?
-        val amount: BigInteger
-        val fee: BigInteger
+        val amount: ICPBigInteger
+        val fee: ICPBigInteger
 
         when(val op = this.transaction.operation) {
 
             is NNSICPIndexCanister.Operation.Approve -> {
                 operation = ICPTokenTransactionOperation.Approve(
                     from = ICPTokenTransactionDestination.AccountId(op.from),
-                    expectedAllowance = op.expected_allowance?.let { BigInteger(it.e8s.toString()) },
+                    expectedAllowance = op.expected_allowance?.let { ICPBigInteger.parseDecimal(it.e8s.toString()) },
                     expires = op.expires_at?.timestamp_nanos?.toLong()
                 )
-                amount = BigInteger(op.allowance.e8s.toString())
-                fee = BigInteger(op.fee.e8s.toString())
+                amount = ICPBigInteger.parseDecimal(op.allowance.e8s.toString())
+                fee = ICPBigInteger.parseDecimal(op.fee.e8s.toString())
                 spender = ICPTokenTransactionDestination.AccountId(op.spender)
             }
 
@@ -63,8 +63,8 @@ internal class IndexTransactionRepository(
                 operation = ICPTokenTransactionOperation.Burn(
                     from = ICPTokenTransactionDestination.AccountId(op.from)
                 )
-                amount = BigInteger(op.amount.e8s.toString())
-                fee = BigInteger.ZERO
+                amount = ICPBigInteger.parseDecimal(op.amount.e8s.toString())
+                fee = ICPBigInteger.valueOf(0)
                 spender = op.spender?.let {
                     ICPTokenTransactionDestination.AccountId(it)
                 }
@@ -74,8 +74,8 @@ internal class IndexTransactionRepository(
                 operation = ICPTokenTransactionOperation.Mint(
                     to = ICPTokenTransactionDestination.AccountId(op.to)
                 )
-                amount = BigInteger(op.amount.e8s.toString())
-                fee = BigInteger.ZERO
+                amount = ICPBigInteger.parseDecimal(op.amount.e8s.toString())
+                fee = ICPBigInteger.valueOf(0)
                 spender = null
             }
 
@@ -84,17 +84,17 @@ internal class IndexTransactionRepository(
                     from = ICPTokenTransactionDestination.AccountId(op.from),
                     to = ICPTokenTransactionDestination.AccountId(op.to)
                 )
-                amount = BigInteger(op.amount.e8s.toString())
-                fee = BigInteger(op.fee.e8s.toString())
+                amount = ICPBigInteger.parseDecimal(op.amount.e8s.toString())
+                fee = ICPBigInteger.parseDecimal(op.fee.e8s.toString())
                 spender = op.spender?.let { ICPTokenTransactionDestination.AccountId(it) }
             }
         }
 
         return ICPTokenTransaction(
-            blockIndex = BigInteger(id.toString()),
+            blockIndex = ICPBigInteger.parseDecimal(id.toString()),
             operation = operation,
             icrc1Memo = icrc1Memo,
-            memo = BigInteger(transaction.memo.toString()),
+            memo = ICPBigInteger.parseDecimal(transaction.memo.toString()),
             amount = amount,
             fee = fee,
             createdNanos = transaction.created_at_time?.timestamp_nanos,

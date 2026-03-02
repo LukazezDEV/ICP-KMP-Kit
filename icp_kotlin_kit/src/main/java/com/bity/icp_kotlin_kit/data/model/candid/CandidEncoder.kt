@@ -8,7 +8,7 @@ import com.bity.icp_kotlin_kit.data.model.candid.model.CandidRecord
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidValue
 import com.bity.icp_kotlin_kit.data.model.candid.model.CandidVector
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
@@ -50,7 +50,7 @@ internal object CandidEncoder {
             is Float -> CandidValue.Float32(arg)
             is Double -> CandidValue.Float64(arg)
 
-            is BigInteger -> CandidValue.Natural(arg)
+            is ICPBigInteger -> CandidValue.Natural(arg)
             is Boolean -> CandidValue.Bool(arg)
             is String -> CandidValue.Text(arg)
             is ByteArray -> CandidValue.Blob(arg)
@@ -116,7 +116,7 @@ internal object CandidEncoder {
     private fun candidPrimitiveTypeForClass(clazz: KClass<*>): CandidType {
         return when(clazz) {
 
-            BigInteger::class -> CandidType.Natural
+            ICPBigInteger::class -> CandidType.Natural
             Float::class -> CandidType.Float32
             Double::class -> CandidType.Float64
 

@@ -6,7 +6,7 @@ import com.bity.icp_kotlin_kit.data.datasource.api.enum.ContentRequestType
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ContentApiModel
 import com.bity.icp_kotlin_kit.domain.model.error.OrderIndependentHashError
 import com.bity.icp_kotlin_kit.util.ext_function.toHexString
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
@@ -58,7 +58,7 @@ internal object OrderIndependentHash {
             is Short -> encodeNumber(value)
             is Int -> encodeNumber(value)
             is Long -> encodeNumber(value)
-            is BigInteger -> encodeBigInt(value)
+            is ICPBigInteger-> encodeBigInt(value)
             is ByteArray -> value
 
             is List<*> -> {
@@ -105,9 +105,9 @@ internal object OrderIndependentHash {
     }
 
     private fun encodeNumber(number: Number): ByteArray =
-        encodeBigInt(BigInteger.valueOf(number.toLong()))
+        encodeBigInt(ICPBigInteger.valueOf(number.toLong()))
 
-    private fun encodeBigInt(bigInt: BigInteger): ByteArray {
+    private fun encodeBigInt(bigInt: ICPBigInteger): ByteArray {
         require(bigInt.signum() != -1) {
             throw OrderIndependentHashError.NonPositiveNumber(bigInt)
         }

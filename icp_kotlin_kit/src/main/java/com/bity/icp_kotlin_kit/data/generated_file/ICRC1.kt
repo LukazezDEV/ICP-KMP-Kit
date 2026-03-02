@@ -8,7 +8,7 @@ import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
 import com.bity.icp_kotlin_kit.domain.model.enum.ICPRequestCertification
 import com.bity.icp_kotlin_kit.domain.model.request.PollingValues
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 /**
  * File generated using ICP Kotlin Kit Plugin
@@ -38,8 +38,8 @@ object ICRC1 {
      * };
      */
     sealed class Value {
-        class Nat(val bigInteger: BigInteger): Value()
-        class Int(val bigInteger: BigInteger): Value()
+        class Nat(val bigInteger: ICPBigInteger): Value()
+        class Int(val bigInteger: ICPBigInteger): Value()
         class Text(val string: String): Value()
         class Blob(val byteArray: ByteArray): Value()
     }
@@ -57,8 +57,8 @@ object ICRC1 {
     class TransferArgs(
         val from_subaccount: ICRC1Subaccount?,
         val to: Account,
-        val amount: BigInteger,
-        val fee: BigInteger?,
+        val amount: ICPBigInteger,
+        val fee: ICPBigInteger?,
         val memo: ByteArray?,
         val created_at_time: ULong?
     )
@@ -76,15 +76,15 @@ object ICRC1 {
      * };
      */
     sealed class TransferError {
-        class BadFee(val expected_fee: BigInteger): TransferError()
-        class BadBurn(val min_burn_amount: BigInteger): TransferError()
-        class InsufficientFunds(val balance: BigInteger): TransferError()
+        class BadFee(val expected_fee: ICPBigInteger): TransferError()
+        class BadBurn(val min_burn_amount: ICPBigInteger): TransferError()
+        class InsufficientFunds(val balance: ICPBigInteger): TransferError()
         data object TooOld : TransferError()
         class CreatedInFuture(val ledger_time: ULong): TransferError()
-        class Duplicate(val duplicate_of: BigInteger): TransferError()
+        class Duplicate(val duplicate_of: ICPBigInteger): TransferError()
         data object TemporarilyUnavailable : TransferError()
         class GenericError(
-            val error_code: BigInteger,
+            val error_code: ICPBigInteger,
             val message: String
         ): TransferError()
     }
@@ -93,7 +93,7 @@ object ICRC1 {
      * type TransferResult = variant { Ok: nat; Err: TransferError; };
      */
     sealed class TransferResult {
-        class Ok(val bigInteger: BigInteger): TransferResult()
+        class Ok(val bigInteger: ICPBigInteger): TransferResult()
         class Err(val transferError: TransferError): TransferResult()
     }
 
@@ -186,7 +186,7 @@ object ICRC1 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_fee",
                 canister = canister
@@ -228,7 +228,7 @@ object ICRC1 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_total_supply",
                 canister = canister
@@ -271,7 +271,7 @@ object ICRC1 {
             certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
             sender: ICPSigningPrincipal? = null,
             pollingValues: PollingValues = PollingValues()
-        ): BigInteger {
+        ): ICPBigInteger {
             val icpQuery = ICPQuery(
                 methodName = "icrc1_balance_of",
                 canister = canister

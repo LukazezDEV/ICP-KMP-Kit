@@ -14,7 +14,7 @@ import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 open class ICRC7NFTRepository(
     private val canister: ICPPrincipal,
@@ -52,22 +52,22 @@ open class ICRC7NFTRepository(
 
     override suspend fun fetchNFT(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ) : ICPNFTCollectionItem {
         TODO("Not yet implemented")
     }
 
     override suspend fun fetchOwner(
         collectionPrincipal: ICPPrincipal,
-        nftId: BigInteger,
+        nftId: ICPBigInteger
     ): ICPPrincipal? {
         TODO("Not yet implemented")
     }
 
     override suspend fun fetchIds(
-        prev: BigInteger?,
-        take: BigInteger?
-    ): List<BigInteger> {
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?
+    ): List<ICPBigInteger> {
         return service.icrc7_tokens(
             prev = prev,
             take = take
@@ -90,7 +90,7 @@ open class ICRC7NFTRepository(
     }
 
     // TODO: icrc7_token_metadata accepts an array of ids, but there is a max value (ex. 100), is this value the same for all canisters?
-    open suspend fun fetchNFTMetadata(nftId: BigInteger) : ICPNFTICRC7Metadata? {
+    open suspend fun fetchNFTMetadata(nftId: ICPBigInteger) : ICPNFTICRC7Metadata? {
         val metadata = try {
             service.icrc7_token_metadata(arrayOf(nftId))
         } catch (t: Throwable) {

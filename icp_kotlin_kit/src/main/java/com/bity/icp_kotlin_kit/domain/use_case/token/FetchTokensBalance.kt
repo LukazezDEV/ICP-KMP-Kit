@@ -8,7 +8,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class FetchTokensBalance internal constructor(
     private val fetchAllTokens: FetchAllTokens,
@@ -36,7 +36,7 @@ class FetchTokensBalance internal constructor(
                         principal = principal
                     ).getOrNull()
 
-                    if (balance != null && balance != BigInteger.ZERO) {
+                    if (balance != null && balance != ICPBigInteger.valueOf(0)) {
                         ICPTokenBalance(token = token, balance = balance)
                     } else {
                         null

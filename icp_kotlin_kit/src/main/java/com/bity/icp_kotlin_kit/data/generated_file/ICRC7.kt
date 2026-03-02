@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.generated_file
 
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.data.model.candid.CandidDecoder
 import com.bity.icp_kotlin_kit.data.repository.ICPQuery
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
@@ -24,8 +24,8 @@ sealed class Value {
 
     class Blob(val byteArray: ByteArray) : Value()
     class Text(val string: String) : Value()
-    class Nat(val bigInteger: BigInteger) : Value()
-    class Int(val bigInteger: BigInteger) : Value()
+    class Nat(val bigInteger: ICPBigInteger) : Value()
+    class Int(val bigInteger: ICPBigInteger) : Value()
     class Array(val values: kotlin.Array<Value>) : Value()
 
     class Map(val values: kotlin.Array<_ArrayClass>) : Value() {
@@ -40,13 +40,13 @@ class TransferArg(
     // The subaccount to transfer the token from
     val from_subaccount: ByteArray?,
     val to: Account,
-    val token_id: BigInteger,
+    val token_id: ICPBigInteger,
     val memo: ByteArray?,
     val created_at_time: ULong?
 )
 
 sealed class TransferResult {
-    class Ok(val bigInteger: BigInteger) : TransferResult()
+    class Ok(val bigInteger: ICPBigInteger) : TransferResult()
     class Err(val transferError: TransferError) : TransferResult()
 }
 
@@ -56,13 +56,13 @@ sealed class TransferError {
     data object Unauthorized : TransferError()
     data object TooOld : TransferError()
     class CreatedInFuture(val ledger_time: ULong) : TransferError()
-    class Duplicate(val duplicate_of: BigInteger) : TransferError()
+    class Duplicate(val duplicate_of: ICPBigInteger) : TransferError()
     class GenericError(
-        val error_code: BigInteger,
+        val error_code: ICPBigInteger,
         val message: String
     ) : TransferError()
     class GenericBatchError(
-        val error_code: BigInteger,
+        val error_code: ICPBigInteger,
         val message: String
     ) : TransferError()
 }
@@ -184,7 +184,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger {
+    ): ICPBigInteger {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_total_supply",
@@ -205,7 +205,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_supply_cap",
@@ -226,7 +226,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_max_query_batch_size",
@@ -247,7 +247,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_max_update_batch_size",
@@ -268,7 +268,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_default_take_value",
@@ -289,7 +289,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_max_take_value",
@@ -310,7 +310,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_max_memo_size",
@@ -352,7 +352,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_tx_window",
@@ -373,7 +373,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): BigInteger? {
+    ): ICPBigInteger? {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_permitted_drift",
@@ -397,7 +397,7 @@ class DBANFTService(
      * vec { opt vec { record { "icrc7:metadata:uri:image"; variant { Text = "https://i.ibb.co/McNjC7M/8-no-backround.png" } } }; },
      */
     suspend fun icrc7_token_metadata(
-        token_ids: Array<BigInteger>,
+        token_ids: Array<ICPBigInteger>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
@@ -413,7 +413,7 @@ class DBANFTService(
                 ValueToEncode(
                     arg = token_ids,
                     expectedClass = Array::class,
-                    arrayType = BigInteger::class,
+                    arrayType = ICPBigInteger::class,
                     expectedClassNullable = false
                 )
             ),
@@ -431,7 +431,7 @@ class DBANFTService(
     )
 
     suspend fun icrc7_owner_of(
-        token_ids: Array<BigInteger>,
+        token_ids: Array<ICPBigInteger>,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
@@ -463,7 +463,7 @@ class DBANFTService(
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): Array<BigInteger> {
+    ): Array<ICPBigInteger> {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_balance_of",
@@ -487,12 +487,12 @@ class DBANFTService(
     }
 
     suspend fun icrc7_tokens(
-        prev: BigInteger?,
-        take: BigInteger?,
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): Array<BigInteger> {
+    ): Array<ICPBigInteger> {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_tokens",
@@ -503,12 +503,12 @@ class DBANFTService(
             values = listOf(
                 ValueToEncode(
                     arg = prev,
-                    expectedClass = BigInteger::class,
+                    expectedClass = ICPBigInteger::class,
                     expectedClassNullable = true
                 ),
                 ValueToEncode(
                     arg = take,
-                    expectedClass = BigInteger::class,
+                    expectedClass = ICPBigInteger::class,
                     expectedClassNullable = true
                 )
             ),
@@ -522,12 +522,12 @@ class DBANFTService(
 
     suspend fun icrc7_tokens_of(
         account: Account,
-        prev: BigInteger?,
-        take: BigInteger?,
+        prev: ICPBigInteger?,
+        take: ICPBigInteger?,
         certification: ICPRequestCertification = ICPRequestCertification.Uncertified,
         sender: ICPSigningPrincipal? = null,
         pollingValues: PollingValues = PollingValues()
-    ): Array<BigInteger> {
+    ): Array<ICPBigInteger> {
 
         val icpQuery = ICPQuery(
             methodName = "icrc7_tokens_of",
@@ -543,12 +543,12 @@ class DBANFTService(
                 ),
                 ValueToEncode(
                     arg = prev,
-                    expectedClass = BigInteger::class,
+                    expectedClass = ICPBigInteger::class,
                     expectedClassNullable = true
                 ),
                 ValueToEncode(
                     arg = take,
-                    expectedClass = BigInteger::class,
+                    expectedClass = ICPBigInteger::class,
                     expectedClassNullable = true
                 )
             ),
