@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
+import okio.BufferedSource
 
-fun Byte.Companion.readFrom(stream: InputStream): Byte =
-    stream.read().toByte()
+fun Byte.Companion.readFrom(source: BufferedSource): Byte =
+    source.readByte()

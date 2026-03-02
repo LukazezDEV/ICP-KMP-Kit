@@ -1,6 +1,7 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
+import okio.BufferedSource
 
-fun UByte.Companion.readFrom(stream: InputStream): UByte =
-    stream.read().toUByte()
+fun UByte.Companion.readFrom(source: BufferedSource): UByte =
+    source.readByte().toUByte()

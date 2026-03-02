@@ -34,6 +34,8 @@ espressoCore = "3.6.1"
 navigationComposeVersion = "2.8.5"
 navigationRuntime = "2.8.5"
 
+okio = "3.9.0"
+
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle-version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
@@ -69,6 +71,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime", version.ref = "navigationRuntime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]

@@ -1,23 +1,27 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
-import java.math.BigInteger
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
+import okio.BufferedSource
 
 val Long.bytes: ByteArray
-    get() = ByteBuffer
-        .allocate(Long.SIZE_BYTES)
-        .order(ByteOrder.LITTLE_ENDIAN)
-        .putLong(this)
-        .array()
+    get() {
+        val bytes = ByteArray(Long.SIZE_BYTES)
+        var value = this
+        for (i in 0 until Long.SIZE_BYTES) {
+            bytes[i] = (value and 0xFF).toByte()
+            value = value shr 8
+        }
+        return bytes
+    }
 
-fun Long.Companion.readFrom(stream: InputStream): Long {
-    val byteArray = ByteArray(SIZE_BYTES)
-    stream.read(byteArray, 0, SIZE_BYTES)
-    byteArray.reverse()
-    return byteArray.toLong()
+fun Long.Companion.readFrom(source: BufferedSource): Long {
+    val bytes = source.readByteArray(Long.SIZE_BYTES.toLong())
+    var result = 0L
+    for (i in bytes.indices.reversed()) {
+        result = (result shl 8) or (bytes[i].toLong() and 0xFF)
+    }
+    return result
 }
 
 internal fun Long.toICPTimestamp(): ULong =
-    toULong().times(1_000_000UL)
+    this.toULong() * 1_000_000UL

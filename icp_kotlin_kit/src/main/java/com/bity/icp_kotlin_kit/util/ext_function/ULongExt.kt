@@ -1,18 +1,33 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
-import java.util.Date
+import kotlinx.datetime.Instant
+import okio.BufferedSource
+import kotlin.experimental.and
 
-// Little-endian = Least significant byte first
+// ======================= ULong =======================
+
+// Little-endian = least significant byte first
 internal val ULong.bytes: ByteArray
-    get() = this.toLong().bytes
+    get() = this.toLong().toULongBytes()
 
-internal fun ULong.Companion.readFrom(stream: InputStream): ULong {
-    val byteArray = ByteArray(SIZE_BYTES)
-    stream.read(byteArray, 0, SIZE_BYTES)
-    byteArray.reverse()
-    return byteArray.toLong().toULong()
+private fun Long.toULongBytes(): ByteArray {
+    val bytes = ByteArray(Long.SIZE_BYTES)
+    var value = this
+    for (i in 0 until Long.SIZE_BYTES) {
+        bytes[i] = (value and 0xFF).toByte()
+        value = value shr 8
+    }
+    return bytes
 }
 
-fun ULong.timestampNanosToDate(): Date =
-    Date(this.div(1_000_000UL).toLong())
+internal fun ULong.Companion.readFrom(source: BufferedSource): ULong {
+    val bytes = source.readByteArray(SIZE_BYTES.toLong())
+    var result = 0UL
+    for (i in bytes.indices.reversed()) {
+        result = (result shl 8) or (bytes[i].toULong() and 0xFFUL)
+    }
+    return result
+}
+
+fun ULong.timestampNanosToInstant(): Instant =
+    Instant.fromEpochMilliseconds((this / 1_000_000UL).toLong())

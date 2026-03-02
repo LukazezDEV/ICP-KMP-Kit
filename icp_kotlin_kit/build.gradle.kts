@@ -7,7 +7,9 @@ kotlin {
     jvm()
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies { implementation(libs.okio) }
+        }
         val commonTest by getting
 
         val jvmMain by getting {

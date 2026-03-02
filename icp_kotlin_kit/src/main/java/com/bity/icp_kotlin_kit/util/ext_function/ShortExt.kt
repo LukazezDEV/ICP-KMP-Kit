@@ -1,20 +1,24 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
+import okio.BufferedSource
 
-// Little-endian = Least significant byte first
 val Short.bytes: ByteArray
-    get() = ByteBuffer
-        .allocate(Short.SIZE_BYTES)
-        .order(ByteOrder.LITTLE_ENDIAN)
-        .putShort(this)
-        .array()
+    get() {
+        val bytes = ByteArray(Short.SIZE_BYTES)
+        var value = this.toInt()
+        for (i in 0 until Short.SIZE_BYTES) {
+            bytes[i] = (value and 0xFF).toByte()
+            value = value shr 8
+        }
+        return bytes
+    }
 
-fun Short.Companion.readFrom(stream: InputStream): Short {
-    val byteArray = ByteArray(SIZE_BYTES)
-    stream.read(byteArray, 0, SIZE_BYTES)
-    byteArray.reverse()
-    return byteArray.toShort()
+fun Short.Companion.readFrom(source: BufferedSource): Short {
+    val bytes = source.readByteArray(Short.SIZE_BYTES.toLong())
+    var result = 0
+    for (i in bytes.indices.reversed()) {
+        result = (result shl 8) or (bytes[i].toInt() and 0xFF)
+    }
+    return result.toShort()
 }

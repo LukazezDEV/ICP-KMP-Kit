@@ -1,19 +1,24 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.InputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
+import kotlinx.datetime.Instant
+import okio.BufferedSource
+import kotlin.experimental.and
 
-// Little-endian = Least significant byte first
 val Double.bytes: ByteArray
-    get() = this.toBits().bytes
+    get() {
+        val bits = this.toBits()
+        val bytes = ByteArray(Long.SIZE_BYTES)
+        for (i in 0 until Long.SIZE_BYTES) {
+            bytes[i] = ((bits shr (i * 8)) and 0xFF).toByte()
+        }
+        return bytes
+    }
 
-fun Double.Companion.readFrom(stream: InputStream): Double {
-    val byteArray = ByteArray(SIZE_BYTES)
-    stream.read(byteArray, 0, SIZE_BYTES)
-
-    val byteBuffer = ByteBuffer.wrap(byteArray)
-    // Set the byte order to little-endian
-    byteBuffer.order(ByteOrder.LITTLE_ENDIAN)
-    return byteBuffer.double
+fun Double.Companion.readFrom(source: BufferedSource): Double {
+    val bytes = source.readByteArray(Long.SIZE_BYTES.toLong())
+    var bits = 0L
+    for (i in bytes.indices.reversed()) {
+        bits = (bits shl 8) or (bytes[i].toLong() and 0xFF)
+    }
+    return Double.fromBits(bits)
 }

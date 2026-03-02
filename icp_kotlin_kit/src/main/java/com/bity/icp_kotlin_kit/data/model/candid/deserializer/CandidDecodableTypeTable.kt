@@ -1,86 +1,80 @@
 package com.bity.icp_kotlin_kit.data.model.candid.deserializer
 
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidFunctionSignature
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidKeyedType
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidPrimitiveType
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidServiceSignature
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidServiceSignatureMethod
-import com.bity.icp_kotlin_kit.data.model.candid.model.CandidType
+import com.bity.icp_kotlin_kit.data.model.candid.model.*
 import com.bity.icp_kotlin_kit.cryptography.LEB128
 import com.bity.icp_kotlin_kit.data.model.error.CandidDeserializationError
-import java.io.ByteArrayInputStream
+import okio.BufferedSource
 
-internal class CandidDecodableTypeTable(stream: ByteArrayInputStream) {
+internal class CandidDecodableTypeTable(source: BufferedSource) {
 
     private val types: List<CandidType>
     val tableData: List<CandidTypeTableData>
 
     init {
-        val typeCount: Int = LEB128.decodeUnsigned(stream)
+        val typeCount: Int = LEB128.decodeUnsigned(source)
         val typeRange = 0 until typeCount
-        tableData = typeRange.map { CandidTypeTableData.decode(stream) }
+
+        tableData = typeRange.map { CandidTypeTableData.decode(source) }
         types = typeRange.map { buildType(it) }
     }
 
-    @Throws()
-    private fun buildType(
-        typeRef: Int
-    ): CandidType {
-        return when(val type = tableData[typeRef]) {
+    private fun buildType(typeRef: Int): CandidType {
+        return when (val type = tableData[typeRef]) {
 
             is CandidTypeTableData.Vector -> {
-                val referencedType = candidType(type.containedType)
-                CandidType.Vector(referencedType)
+                val referenced = candidType(type.containedType)
+                CandidType.Vector(referenced)
             }
 
             is CandidTypeTableData.Option -> {
-                val referenceType = candidType(type.containedType)
-                CandidType.Option(referenceType)
+                val referenced = candidType(type.containedType)
+                CandidType.Option(referenced)
             }
 
             is CandidTypeTableData.Record -> {
-                val rowTypes = type.rows.map {
-                    val rowType = candidType(it.type)
+                val rows = type.rows.map {
                     CandidKeyedType(
                         key = it.hashedKey,
-                        type = rowType
+                        type = candidType(it.type)
                     )
                 }
-                CandidType.Record(rowTypes)
+                CandidType.Record(rows)
             }
 
             is CandidTypeTableData.Variant -> {
-                val rowTypes = type.rows.map {
-                    val rowType = candidType(it.type)
+                val rows = type.rows.map {
                     CandidKeyedType(
                         key = it.hashedKey,
-                        type = rowType
+                        type = candidType(it.type)
                     )
                 }
-                CandidType.Variant(rowTypes)
+                CandidType.Variant(rows)
             }
 
-            is CandidTypeTableData.Function -> CandidType.Function(
-                signature = CandidFunctionSignature(
-                    inputs = type.inputTypes.map { candidType(it) },
-                    outputs = type.outputTypes.map { candidType(it) },
-                    query = type.annotations.contains(0x01UL),
-                    oneWay = type.annotations.contains(0x02UL),
-                    compositeQuery = type.annotations.contains(0x03UL)
+            is CandidTypeTableData.Function -> {
+                CandidType.Function(
+                    signature = CandidFunctionSignature(
+                        inputs = type.inputTypes.map { candidType(it) },
+                        outputs = type.outputTypes.map { candidType(it) },
+                        query = type.annotations.contains(0x01UL),
+                        oneWay = type.annotations.contains(0x02UL),
+                        compositeQuery = type.annotations.contains(0x03UL)
+                    )
                 )
-            )
+            }
 
             is CandidTypeTableData.Service -> {
-                val serviceMethods = type.methods.map {
+                val methods = type.methods.map {
                     val signature = candidType(it.functionType).functionSignature
                         ?: throw CandidDeserializationError.InvalidTypeReference()
+
                     CandidServiceSignatureMethod(
                         name = it.name,
                         functionSignature = signature
                     )
                 }
                 CandidType.Service(
-                    CandidServiceSignature(serviceMethods)
+                    CandidServiceSignature(methods)
                 )
             }
         }
@@ -91,16 +85,22 @@ internal class CandidDecodableTypeTable(stream: ByteArrayInputStream) {
         CandidDeserializationError.InvalidPrimitive::class
     )
     private fun candidType(type: Int): CandidType {
-        return if(type >= 0) {
+        return if (type >= 0) {
             require(tableData.size > type) {
                 throw CandidDeserializationError.InvalidTypeReference()
             }
-            if(isTypeRecursive(type)) CandidType.Named("$type")
-            else buildType(type)
+
+            if (isTypeRecursive(type)) {
+                CandidType.Named("$type")
+            } else {
+                buildType(type)
+            }
+
         } else {
-            val primitiveContainedType = CandidPrimitiveType.candidPrimitiveTypeByValue(type)
+            val primitive = CandidPrimitiveType.candidPrimitiveTypeByValue(type)
                 ?: throw CandidDeserializationError.InvalidPrimitive()
-            CandidType.init(primitiveContainedType)
+
+            CandidType.init(primitive)
                 ?: throw CandidDeserializationError.InvalidPrimitive()
         }
     }
@@ -110,35 +110,52 @@ internal class CandidDecodableTypeTable(stream: ByteArrayInputStream) {
         CandidDeserializationError.InvalidTypeReference::class
     )
     fun getTypeForReference(reference: Int): CandidType {
-        if(reference < 0) {
+        if (reference < 0) {
             val primitive = CandidPrimitiveType.candidPrimitiveTypeByValue(reference)
                 ?: throw CandidDeserializationError.InvalidPrimitive()
+
             return CandidType.init(primitive)
                 ?: throw CandidDeserializationError.InvalidPrimitive()
         }
+
         require(types.size > reference) {
             throw CandidDeserializationError.InvalidTypeReference()
         }
-        return if(isTypeRecursive(reference)) CandidType.Named("$reference") else types[reference]
+
+        return if (isTypeRecursive(reference)) {
+            CandidType.Named("$reference")
+        } else {
+            types[reference]
+        }
     }
 
     private fun isTypeRecursive(typeRef: Int, visited: List<Int> = emptyList()): Boolean {
-        if(typeRef < 0) return false
-        if(visited.contains(typeRef)) return true
-        val visitedUpdated = visited + typeRef
-        return when(val type = tableData[typeRef]) {
-            is CandidTypeTableData.Vector -> return isTypeRecursive(type.containedType, visitedUpdated)
-            is CandidTypeTableData.Option -> return isTypeRecursive(type.containedType, visitedUpdated)
-            is CandidTypeTableData.Record -> type.rows
-                .firstOrNull { isTypeRecursive(it.type, visitedUpdated) } != null
-            is CandidTypeTableData.Variant -> type.rows
-                .firstOrNull { isTypeRecursive(it.type, visitedUpdated) } != null
+        if (typeRef < 0) return false
+        if (visited.contains(typeRef)) return true
+
+        val nextVisited = visited + typeRef
+
+        return when (val type = tableData[typeRef]) {
+
+            is CandidTypeTableData.Vector ->
+                isTypeRecursive(type.containedType, nextVisited)
+
+            is CandidTypeTableData.Option ->
+                isTypeRecursive(type.containedType, nextVisited)
+
+            is CandidTypeTableData.Record ->
+                type.rows.any { isTypeRecursive(it.type, nextVisited) }
+
+            is CandidTypeTableData.Variant ->
+                type.rows.any { isTypeRecursive(it.type, nextVisited) }
+
             is CandidTypeTableData.Function -> {
-                val types = type.inputTypes + type.outputTypes
-                types.firstOrNull { isTypeRecursive(it, visitedUpdated) } != null
+                val all = type.inputTypes + type.outputTypes
+                all.any { isTypeRecursive(it, nextVisited) }
             }
-            is CandidTypeTableData.Service -> type.methods
-                .firstOrNull { isTypeRecursive(it.functionType, visitedUpdated) } != null
+
+            is CandidTypeTableData.Service ->
+                type.methods.any { isTypeRecursive(it.functionType, nextVisited) }
         }
     }
 }

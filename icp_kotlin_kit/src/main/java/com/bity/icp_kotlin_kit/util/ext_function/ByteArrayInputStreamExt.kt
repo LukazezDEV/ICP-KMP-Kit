@@ -1,10 +1,7 @@
 package com.bity.icp_kotlin_kit.util.ext_function
 
-import java.io.ByteArrayInputStream
+import okio.BufferedSource
 
-fun ByteArrayInputStream.readNextBytes(length: Int): ByteArray {
-    val buffer = ByteArray(length)
-    val bytesRead = read(buffer, 0, length)
-    require(bytesRead == length)
-    return buffer
+fun BufferedSource.readNextBytes(length: Int): ByteArray {
+    return readByteArray(length.toLong())
 }
