@@ -12,13 +12,12 @@ import com.bity.icp_kotlin_kit.data.datasource.api.request.ICPRequestEnvelope
 import com.bity.icp_kotlin_kit.data.model.candid.serializer.CandidSerializer
 import com.bity.icp_kotlin_kit.domain.model.ICPPrincipal
 import com.bity.icp_kotlin_kit.domain.model.ICPSigningPrincipal
-import java.time.Duration
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 internal object ICPRequestUtil {
 
     private const val NONCE_BYTE_LENGTH = 32
-    // 4 minutes
     private const val DEFAULT_INGRESS_EXPIRY_SECONDS: Long = 4 * 60
 
     fun buildContent(request: ICPRequestApiModel, sender: ICPPrincipal?): ContentApiModel {
@@ -72,9 +71,8 @@ internal object ICPRequestUtil {
         )
     }
 
-    // TODO
     private fun createIngressExpiry(seconds: Long = DEFAULT_INGRESS_EXPIRY_SECONDS): Long {
-        val expiryDate = Instant.now().plusSeconds(seconds)
-        return Duration.between(Instant.EPOCH, expiryDate).toNanos()
+        val expiryInstant = Clock.System.now().plus(seconds, kotlinx.datetime.DateTimeUnit.SECOND)
+        return expiryInstant.toEpochMilliseconds() * 1_000_000UL // nanos
     }
 }

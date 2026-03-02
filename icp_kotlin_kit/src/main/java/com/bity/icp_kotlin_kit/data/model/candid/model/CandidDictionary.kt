@@ -1,6 +1,6 @@
 package com.bity.icp_kotlin_kit.data.model.candid.model
 
-import java.lang.RuntimeException
+import kotlin.RuntimeException
 
 internal class CandidDictionary(
     hashedDictionary: HashMap<ULong, CandidValue>
