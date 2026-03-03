@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.io.ByteArrayInputStream
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
+import okio.buffer
+import okio.source
 
 @OptIn(ExperimentalStdlibApi::class)
 class LEB128Test {
@@ -15,7 +16,7 @@ class LEB128Test {
         buf: ByteArray,
         expectedResult: Byte
     ) {
-        val stream = ByteArrayInputStream(buf)
+        val stream = buf.inputStream().source().buffer()
         val result = LEB128.decodeUnsigned<UByte>(stream)
         assertEquals(
             expectedResult.toUByte(),
@@ -30,7 +31,7 @@ class LEB128Test {
         buf: ByteArray,
         expectedResult: Short
     ) {
-        val stream = ByteArrayInputStream(buf)
+        val stream = buf.inputStream().source().buffer()
         val result = LEB128.decodeUnsigned<UShort>(stream)
         assertEquals(
             expectedResult.toUShort(),
@@ -45,7 +46,7 @@ class LEB128Test {
         buf: ByteArray,
         expectedResult: Int
     ) {
-        val stream = ByteArrayInputStream(buf)
+        val stream = buf.inputStream().source().buffer()
         val result = LEB128.decodeUnsigned<UInt>(stream)
         assertEquals(
             expectedResult.toUInt(),
@@ -60,7 +61,7 @@ class LEB128Test {
         buf: ByteArray,
         expectedResult: Long
     ) {
-        val stream = ByteArrayInputStream(buf)
+        val stream = buf.inputStream().source().buffer()
         val result = LEB128.decodeUnsigned<ULong>(stream)
         assertEquals(
             expectedResult.toULong(),
@@ -71,12 +72,12 @@ class LEB128Test {
 
     @MethodSource("unsignedBigIntValues")
     @ParameterizedTest(name = "Decoding {1}")
-    fun `decode unsigned BigInteger value`(
+    fun `decode unsigned ICPBigInteger value`(
         buf: ByteArray,
-        expectedResult: BigInteger
+        expectedResult: ICPBigInteger
     ) {
-        val stream = ByteArrayInputStream(buf)
-        val result = LEB128.decodeUnsigned<BigInteger>(stream)
+        val stream = buf.inputStream().source().buffer()
+        val result = LEB128.decodeUnsigned<ICPBigInteger>(stream)
         assertEquals(
             expectedResult,
             result,
@@ -90,24 +91,20 @@ class LEB128Test {
         buf: ByteArray,
         expectedValue: Int
     ) {
-        val stream = ByteArrayInputStream(buf)
+        val stream = buf.inputStream().source().buffer()
         val result = LEB128.decodeSigned<Int>(stream)
         assertEquals(
             expectedValue,
             result,
             "Failed to decode $expectedValue"
         )
-        assertEquals(
-            0,
-            stream.available(),
-            "Stream is not empty"
-        )
+        assertTrue(stream.exhausted(), "Stream is not empty")
     }
 
     @MethodSource("signedBigIntValues")
     @ParameterizedTest(name = "Encoding {0}")
     fun `encode signed BigInt`(
-        value: BigInteger,
+        value: ICPBigInteger,
         expectedResult: ByteArray
     ) {
         val result = LEB128.encodeSigned(value)
@@ -131,7 +128,7 @@ class LEB128Test {
     @ParameterizedTest(name = "Encoding {0}")
     fun `encode unsigned BigInt`(
         expectedResult: ByteArray,
-        value: BigInteger
+        value: ICPBigInteger
     ) {
         val result = LEB128.encodeUnsigned(value)
         assertTrue(
@@ -142,27 +139,27 @@ class LEB128Test {
     companion object {
         @JvmStatic
         fun signedBigIntValues() = listOf(
-            Arguments.of(BigInteger.ZERO, byteArrayOf(0x00)),
-            Arguments.of(BigInteger.valueOf(63), byteArrayOf(0x3F)),
-            Arguments.of(BigInteger.valueOf(64), byteArrayOf(0xC0.toByte(), 0x00)),
-            Arguments.of(BigInteger.valueOf(-63), byteArrayOf(0x41)),
-            Arguments.of(BigInteger.valueOf(-64), byteArrayOf(0x40)),
-            Arguments.of(BigInteger.valueOf(-65), byteArrayOf(0xBF.toByte(), 0x7F)),
-            Arguments.of(BigInteger.valueOf(-128), byteArrayOf(0x80.toByte(), 0x7F)),
-            Arguments.of(BigInteger.valueOf(-129), byteArrayOf(0xFF.toByte(), 0x7E)),
-            Arguments.of(BigInteger.valueOf(97), byteArrayOf(0xE1.toByte(), 0x00)),
-            Arguments.of(BigInteger.valueOf(127), byteArrayOf(0xFF.toByte(), 0x00)),
-            Arguments.of(BigInteger.valueOf(512), byteArrayOf(0x80.toByte(), 0x04)),
-            Arguments.of(BigInteger.valueOf(-512), byteArrayOf(0x80.toByte(), 0x7C)),
-            Arguments.of(BigInteger.valueOf(1000), byteArrayOf(0xE8.toByte(), 0x07)),
-            Arguments.of(BigInteger.valueOf(-1000), byteArrayOf(0x98.toByte(), 0x78.toByte())),
-            Arguments.of(BigInteger.valueOf(10000), byteArrayOf(0x90.toByte(), 0xCE.toByte(), 0x00)),
+            Arguments.of(ICPBigInteger.ZERO, byteArrayOf(0x00)),
+            Arguments.of(ICPBigInteger.valueOf(63), byteArrayOf(0x3F)),
+            Arguments.of(ICPBigInteger.valueOf(64), byteArrayOf(0xC0.toByte(), 0x00)),
+            Arguments.of(ICPBigInteger.valueOf(-63), byteArrayOf(0x41)),
+            Arguments.of(ICPBigInteger.valueOf(-64), byteArrayOf(0x40)),
+            Arguments.of(ICPBigInteger.valueOf(-65), byteArrayOf(0xBF.toByte(), 0x7F)),
+            Arguments.of(ICPBigInteger.valueOf(-128), byteArrayOf(0x80.toByte(), 0x7F)),
+            Arguments.of(ICPBigInteger.valueOf(-129), byteArrayOf(0xFF.toByte(), 0x7E)),
+            Arguments.of(ICPBigInteger.valueOf(97), byteArrayOf(0xE1.toByte(), 0x00)),
+            Arguments.of(ICPBigInteger.valueOf(127), byteArrayOf(0xFF.toByte(), 0x00)),
+            Arguments.of(ICPBigInteger.valueOf(512), byteArrayOf(0x80.toByte(), 0x04)),
+            Arguments.of(ICPBigInteger.valueOf(-512), byteArrayOf(0x80.toByte(), 0x7C)),
+            Arguments.of(ICPBigInteger.valueOf(1000), byteArrayOf(0xE8.toByte(), 0x07)),
+            Arguments.of(ICPBigInteger.valueOf(-1000), byteArrayOf(0x98.toByte(), 0x78.toByte())),
+            Arguments.of(ICPBigInteger.valueOf(10000), byteArrayOf(0x90.toByte(), 0xCE.toByte(), 0x00)),
             Arguments.of(
-                BigInteger.valueOf(-10000),
+                ICPBigInteger.valueOf(-10000),
                 byteArrayOf(0xF0.toByte(), 0xB1.toByte(), 0x7F.toByte())
             ),
             Arguments.of(
-                BigInteger.valueOf(-999999999),
+                ICPBigInteger.valueOf(-999999999),
                 byteArrayOf(
                     0x81.toByte(),
                     0xec.toByte(),
@@ -175,12 +172,12 @@ class LEB128Test {
 
         @JvmStatic
         fun unsignedBigIntValues() = listOf(
-            Arguments.of(byteArrayOf(0x00.toByte()), BigInteger.ZERO),
-            Arguments.of(byteArrayOf(0x7f.toByte()), BigInteger("127")),
-            Arguments.of(byteArrayOf(0x80.toByte(), 0x01.toByte()), BigInteger("128")),
-            Arguments.of(byteArrayOf(0xac.toByte(), 0x02.toByte()), BigInteger("300")),
-            Arguments.of(byteArrayOf(0xff.toByte(), 0x01.toByte()), BigInteger("255")),
-            Arguments.of(byteArrayOf(0xe5.toByte(), 0x8e.toByte(), 0x26.toByte()), BigInteger("624485")),
+            Arguments.of(byteArrayOf(0x00.toByte()), ICPBigInteger.ZERO),
+            Arguments.of(byteArrayOf(0x7f.toByte()), ICPBigInteger.parseDecimal("127")),
+            Arguments.of(byteArrayOf(0x80.toByte(), 0x01.toByte()), ICPBigInteger.parseDecimal(("128"))),
+            Arguments.of(byteArrayOf(0xac.toByte(), 0x02.toByte()), ICPBigInteger.parseDecimal(("300"))),
+            Arguments.of(byteArrayOf(0xff.toByte(), 0x01.toByte()), ICPBigInteger.parseDecimal(("255"))),
+            Arguments.of(byteArrayOf(0xe5.toByte(), 0x8e.toByte(), 0x26.toByte()), ICPBigInteger.parseDecimal(("624485"))),
             Arguments.of(
                 byteArrayOf(
                     0xFF.toByte(),
@@ -193,7 +190,7 @@ class LEB128Test {
                     0xFF.toByte(),
                     0xFF.toByte(),
                     0x01.toByte()
-                ), BigInteger("18446744073709551615")
+                ), ICPBigInteger.parseDecimal("18446744073709551615")
             ),
         )
 

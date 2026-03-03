@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.math.BigInteger
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 internal class CandidConversionTest {
 
@@ -55,15 +55,15 @@ internal class CandidConversionTest {
             Arguments.of(CandidValue.Null, byteArrayOf(0x00, 0x01, 0x7F)),
             Arguments.of(CandidValue.Bool(false), byteArrayOf(0x00, 0x01, 0x7E, 0x00)),
             Arguments.of(CandidValue.Bool(true), byteArrayOf(0x00, 0x01, 0x7E, 0x01)),
-            Arguments.of(CandidValue.Natural(BigInteger.ZERO), byteArrayOf(0x00, 0x01, 0x7D, 0x0)),
-            Arguments.of(CandidValue.Natural(BigInteger.ONE), byteArrayOf(0x00, 0x01, 0x7D, 0x01)),
+            Arguments.of(CandidValue.Natural(ICPBigInteger.ZERO), byteArrayOf(0x00, 0x01, 0x7D, 0x0)),
+            Arguments.of(CandidValue.Natural(ICPBigInteger.ONE), byteArrayOf(0x00, 0x01, 0x7D, 0x01)),
             Arguments.of(
-                CandidValue.Natural(BigInteger.valueOf(300)), byteArrayOf(
+                CandidValue.Natural(ICPBigInteger.valueOf(300)), byteArrayOf(
                     0x00, 0x01, 0x7D, 0xAC.toByte(), 0x02
                 )
             ),
             Arguments.of(
-                CandidValue.Integer(BigInteger.valueOf(-129)), byteArrayOf(
+                CandidValue.Integer(ICPBigInteger.valueOf(-129)), byteArrayOf(
                     0x00, 0x01, 0x7C, 0xFF.toByte(), 0x7E
                 )
             ),
@@ -198,7 +198,7 @@ internal class CandidConversionTest {
                 CandidValue.Record(
                     CandidRecord.init(
                         hashMapOf(
-                            "a" to CandidValue.Natural(BigInteger.valueOf(1)),
+                            "a" to CandidValue.Natural(ICPBigInteger.valueOf(1)),
                             "b" to CandidValue.Natural8(2U)
                         )
                     )

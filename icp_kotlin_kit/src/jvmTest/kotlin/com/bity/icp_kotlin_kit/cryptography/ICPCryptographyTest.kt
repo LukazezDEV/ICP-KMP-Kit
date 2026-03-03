@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.cryptography
 
+import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransaction
 import com.bity.icp_kotlin_kit.domain.model.icp_block.ICPBlockTransactionOperation
 import com.bity.icp_kotlin_kit.util.ext_function.fromHex
@@ -82,8 +83,8 @@ class ICPCryptographyTest {
                     operation = ICPBlockTransactionOperation.Transfer(
                         from = "e9344613c9615a83cf15748d9265c77b76244166678d4a0fd5df13186c64b9c4".hexToByteArray(),
                         to = "b87f601d508c2fe1967d1eaceb4e81205e77e29dc46eb96df2028881ed4c9f8c".hexToByteArray(),
-                        amount = BigInteger.valueOf(1_418_990_000),
-                        fee = BigInteger.valueOf(10_000),
+                        amount = ICPBigInteger.valueOf(1_418_990_000),
+                        fee = ICPBigInteger.valueOf(10_000),
                         spender = null
                     )
                 ),
@@ -96,8 +97,8 @@ class ICPCryptographyTest {
                     operation = ICPBlockTransactionOperation.Transfer(
                         from = "cafd0a2c27f41a851837b00f019b93e741f76e4147fe74435fb7efb836826a1c".hexToByteArray(),
                         to = "cafd0a2c27f41a851837b00f019b93e741f76e4147fe74435fb7efb836826a1c".hexToByteArray(),
-                        amount = BigInteger.valueOf(1_000_000),
-                        fee = BigInteger.valueOf(10_000),
+                        amount = ICPBigInteger.valueOf(1_000_000),
+                        fee = ICPBigInteger.valueOf(10_000),
                         spender = null
                     )
                 ),
