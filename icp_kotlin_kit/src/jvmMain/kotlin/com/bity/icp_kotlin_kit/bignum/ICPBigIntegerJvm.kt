@@ -45,6 +45,9 @@ actual class ICPBigInteger(private val delegate: JBigInteger) {
     actual override fun toString(): String = delegate.toString()
 
     actual companion object {
+        actual val ZERO = ICPBigInteger(JBigInteger.ZERO)
+        actual val ONE = ICPBigInteger(JBigInteger.ONE)
+
         actual fun fromByteArray(bytes: ByteArray) =
             ICPBigInteger(JBigInteger(bytes))
 

@@ -36,7 +36,7 @@ class FetchTokensBalance internal constructor(
                         principal = principal
                     ).getOrNull()
 
-                    if (balance != null && balance != ICPBigInteger.valueOf(0)) {
+                    if (balance != null && balance != ICPBigInteger.ZERO) {
                         ICPTokenBalance(token = token, balance = balance)
                     } else {
                         null

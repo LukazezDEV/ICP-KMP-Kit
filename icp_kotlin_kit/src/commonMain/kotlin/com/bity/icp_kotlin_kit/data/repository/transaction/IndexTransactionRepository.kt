@@ -64,7 +64,7 @@ internal class IndexTransactionRepository(
                     from = ICPTokenTransactionDestination.AccountId(op.from)
                 )
                 amount = ICPBigInteger.parseDecimal(op.amount.e8s.toString())
-                fee = ICPBigInteger.valueOf(0)
+                fee = ICPBigInteger.ZERO
                 spender = op.spender?.let {
                     ICPTokenTransactionDestination.AccountId(it)
                 }
@@ -75,7 +75,7 @@ internal class IndexTransactionRepository(
                     to = ICPTokenTransactionDestination.AccountId(op.to)
                 )
                 amount = ICPBigInteger.parseDecimal(op.amount.e8s.toString())
-                fee = ICPBigInteger.valueOf(0)
+                fee = ICPBigInteger.ZERO
                 spender = null
             }
 

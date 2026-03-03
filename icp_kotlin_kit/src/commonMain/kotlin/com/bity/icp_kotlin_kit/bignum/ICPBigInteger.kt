@@ -17,14 +17,15 @@ expect class ICPBigInteger {
     fun toShort(): Short
     fun toInt(): Int
     fun toLong(): Long
-
-    // ⭐ NEW
     fun toFloat(): Float
     fun signum(): Int
 
     override fun toString(): String
 
     companion object {
+        val ZERO: ICPBigInteger
+        val ONE: ICPBigInteger
+
         fun fromByteArray(bytes: ByteArray): ICPBigInteger
         fun fromSignMagnitude(sign: Int, magnitude: ByteArray): ICPBigInteger
         fun valueOf(long: Long): ICPBigInteger

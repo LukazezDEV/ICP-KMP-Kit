@@ -45,12 +45,12 @@ object LEB128 {
             var byte = value.and(mask7F).toByte()
             value = value.shiftRight(7)
 
-            if (value != ICPBigInteger.valueOf(0)) {
+            if (value != ICPBigInteger.ZERO) {
                 byte = (byte.toInt() or 0x80).toByte()
             }
 
             bytes.add(byte)
-        } while (value != ICPBigInteger.valueOf(0))
+        } while (value != ICPBigInteger.ZERO)
 
         return bytes.toByteArray()
     }
@@ -87,7 +87,7 @@ object LEB128 {
 
             val signBit = (byte.toInt() shr 6) and 1
 
-            if ((value == ICPBigInteger.valueOf(0) && signBit == 0) ||
+            if ((value == ICPBigInteger.ZERO && signBit == 0) ||
                 (value == minusOne && signBit == 1)
             ) {
                 more = false
@@ -106,7 +106,7 @@ object LEB128 {
     // -----------------------------
 
     inline fun <reified T> decodeUnsigned(source: BufferedSource): T {
-        var result = ICPBigInteger.valueOf(0)
+        var result = ICPBigInteger.ZERO
         var shift = 0
 
         var byte: Int
@@ -137,7 +137,7 @@ object LEB128 {
     // -----------------------------
 
     inline fun <reified T : Any> decodeSigned(source: BufferedSource): T {
-        var result = ICPBigInteger.valueOf(0)
+        var result = ICPBigInteger.ZERO
         var shift = 0
 
         var byte: Int

@@ -55,7 +55,7 @@ class ICRC1TransactionRepository(
                     from = getDestinationAccount(burn.from)
                 )
                 amount = burn.amount
-                fee = ICPBigInteger.valueOf(0)
+                fee = ICPBigInteger.ZERO
                 spender = burn.spender?.let { getDestinationAccount(it) }
                 created = burn.created_at_time
                 icrc1Memo = burn.memo?.map { it.toByte() }?.toByteArray()
@@ -69,7 +69,7 @@ class ICRC1TransactionRepository(
                     expires = approve.expires_at?.toLong()
                 )
                 amount = approve.amount
-                fee = ICPBigInteger.valueOf(0)
+                fee = ICPBigInteger.ZERO
                 spender = getDestinationAccount(approve.spender)
                 created = approve.created_at_time
                 icrc1Memo = approve.memo?.map { it.toByte() }?.toByteArray()
@@ -82,7 +82,7 @@ class ICRC1TransactionRepository(
                     to = getDestinationAccount(transfer.to)
                 )
                 amount = transfer.amount
-                fee = transfer.fee ?: ICPBigInteger.valueOf(0)
+                fee = transfer.fee ?: ICPBigInteger.ZERO
                 spender = transfer.spender?.let { getDestinationAccount(it) }
                 created = transfer.created_at_time
                 icrc1Memo = transfer.memo?.map { it.toByte() }?.toByteArray()
@@ -94,7 +94,7 @@ class ICRC1TransactionRepository(
                     to = getDestinationAccount(mint.to)
                 )
                 amount = mint.amount
-                fee = ICPBigInteger.valueOf(0)
+                fee = ICPBigInteger.ZERO
                 spender = null
                 created = mint.created_at_time
                 icrc1Memo = mint.memo?.map { it.toByte() }?.toByteArray()
