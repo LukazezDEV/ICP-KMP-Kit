@@ -48,6 +48,6 @@ class FetchTokensBalance internal constructor(
                 }
             }
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.Default)
 
 }

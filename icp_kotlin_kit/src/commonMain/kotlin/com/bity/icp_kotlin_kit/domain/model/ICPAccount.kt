@@ -1,10 +1,9 @@
 package com.bity.icp_kotlin_kit.domain.model
 
+import com.bity.icp_kotlin_kit.cryptography.Base32
 import com.bity.icp_kotlin_kit.cryptography.CRC32
 import com.bity.icp_kotlin_kit.domain.exception.ICPAccountException
 import com.bity.icp_kotlin_kit.util.cryptography.ICPAccountCryptography
-import com.google.common.io.BaseEncoding
-import kotlin.jvm.Throws
 
 @OptIn(ExperimentalStdlibApi::class)
 class ICPAccount(
@@ -110,7 +109,7 @@ class ICPAccount(
             subAccountId: ByteArray
         ): String {
             val checksum = CRC32(principal.bytes + subAccountId)
-            return BaseEncoding.base32().encode(checksum)
+            return Base32.encode(checksum)
         }
     }
 }

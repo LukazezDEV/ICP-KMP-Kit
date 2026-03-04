@@ -33,6 +33,6 @@ class FetchAccountTransactions internal constructor(
                 deferred.await()?.let { emit(it) }
             }
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.Default)
 
 }
