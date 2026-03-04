@@ -1,15 +1,17 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.model
 
 import com.bity.icp_kotlin_kit.data.datasource.api.enum.ContentRequestType
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 // Need to use sneak case because of order independent hash
+@Serializable
 internal class CallApiModel(
-    @JsonProperty("request_type") override val request_type: ContentRequestType,
-    @JsonProperty("sender") override val sender: ByteArray,
-    @JsonProperty("nonce") override val nonce: ByteArray,
-    @JsonProperty("ingress_expiry") override val ingress_expiry: Long,
-    @JsonProperty("method_name") val method_name: String,
-    @JsonProperty("canister_id") val canister_id: ByteArray,
-    @JsonProperty("arg") val arg: ByteArray
+    @SerialName("request_type") override val request_type: ContentRequestType,
+    @SerialName("sender") override val sender: ByteArray,
+    @SerialName("nonce") override val nonce: ByteArray,
+    @SerialName("ingress_expiry") override val ingress_expiry: Long,
+    @SerialName("method_name") val method_name: String,
+    @SerialName("canister_id") val canister_id: ByteArray,
+    @SerialName("arg") val arg: ByteArray
 ): ContentApiModel()

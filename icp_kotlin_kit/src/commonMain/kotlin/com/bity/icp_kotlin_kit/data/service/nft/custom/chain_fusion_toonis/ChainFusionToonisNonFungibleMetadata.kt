@@ -1,9 +1,11 @@
 package com.bity.icp_kotlin_kit.data.service.nft.custom.chain_fusion_toonis
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ChainFusionToonisNonFungibleMetadata(
-    @JsonProperty("url") val url: String,
-    @JsonProperty("thumb") val thumb: String,
-    @JsonProperty("mimeType") val mimeType: String
+    @SerialName("url") val url: String,
+    @SerialName("thumb") val thumb: String,
+    @SerialName("mimeType") val mimeType: String
 )

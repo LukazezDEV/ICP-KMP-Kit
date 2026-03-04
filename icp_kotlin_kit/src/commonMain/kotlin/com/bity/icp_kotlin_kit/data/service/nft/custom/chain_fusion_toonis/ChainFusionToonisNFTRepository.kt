@@ -10,8 +10,7 @@ import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTEXTMetadata
 import com.bity.icp_kotlin_kit.domain.model.nft.metadata.ICPNFTMetadata
 import com.bity.icp_kotlin_kit.domain.repository.NFTRepository
 import com.bity.icp_kotlin_kit.util.logger.ICPKitLogger
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import kotlinx.serialization.json.Json
 import com.bity.icp_kotlin_kit.bignum.ICPBigInteger
 
 class ChainFusionToonisNFTRepository(
@@ -19,7 +18,6 @@ class ChainFusionToonisNFTRepository(
     private val service: ChainFusionToonis.CFTService,
 ) : NFTRepository {
 
-    private val objectMapper  = ObjectMapper().registerKotlinModule()
 
     override suspend fun fetchIds(
         prev: ICPBigInteger?,
@@ -96,7 +94,7 @@ class ChainFusionToonisNFTRepository(
         val metadata = (this as? ChainFusionToonis.Metadata__1.nonfungible)?.metadata ?: return null
         val jsonContent = metadata.toString(Charsets.UTF_8)
         try {
-            val nonFungibleMetadata = objectMapper.readValue(jsonContent, ChainFusionToonisNonFungibleMetadata::class.java)
+            val nonFungibleMetadata = Json.decodeFromString<ChainFusionToonisNonFungibleMetadata>(jsonContent)
             return ICPNFTEXTMetadata(
                 nftImageUrl = nonFungibleMetadata.url,
                 thumbnailUrl = nonFungibleMetadata.thumb

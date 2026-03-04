@@ -1,6 +1,7 @@
 plugins {
     `maven-publish`
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -12,6 +13,7 @@ kotlin {
                 implementation(libs.okio)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.cryptography.core)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
         val commonTest by getting

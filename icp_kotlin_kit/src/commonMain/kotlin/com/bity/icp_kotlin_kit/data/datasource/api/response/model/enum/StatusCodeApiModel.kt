@@ -1,11 +1,13 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.response.model.enum
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class StatusCodeApiModel {
-    @JsonProperty(value = "received") Received,
-    @JsonProperty(value = "processing") Processing,
-    @JsonProperty(value = "replied") Replied,
-    @JsonProperty(value = "rejected") Rejected,
-    @JsonProperty(value = "done") Done
+    @SerialName(value = "received") Received,
+    @SerialName(value = "processing") Processing,
+    @SerialName(value = "replied") Replied,
+    @SerialName(value = "rejected") Rejected,
+    @SerialName(value = "done") Done
 }

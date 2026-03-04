@@ -1,7 +1,9 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.request.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class AccountIdentifierApiModel(
-    @JsonProperty("address") val address: String
+    @SerialName("address") val address: String
 )

@@ -1,8 +1,10 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.request.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class NetworkIdentifierApiModel(
-    @JsonProperty("blockchain") val blockchain: String,
-    @JsonProperty("network") val network: String
+    @SerialName("blockchain") val blockchain: String,
+    @SerialName("network") val network: String
 )

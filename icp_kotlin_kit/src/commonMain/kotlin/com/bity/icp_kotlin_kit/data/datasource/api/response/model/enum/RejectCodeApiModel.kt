@@ -1,15 +1,17 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.response.model.enum
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 // TODO, remove PlaceHolder and fix mapping
+@Serializable
 enum class RejectCodeApiModel {
     PlaceHolder,
-    @JsonProperty("1") SystemFatal,
-    @JsonProperty("2") SystemTransient,
-    @JsonProperty("3") DestinationInvalid,
-    @JsonProperty("4") CanisterReject,
-    @JsonProperty("5") CanisterError;
+    @SerialName("1") SystemFatal,
+    @SerialName("2") SystemTransient,
+    @SerialName("3") DestinationInvalid,
+    @SerialName("4") CanisterReject,
+    @SerialName("5") CanisterError;
 
     companion object {
         fun valueFromErrorCode(value: Int): RejectCodeApiModel? =

@@ -1,12 +1,14 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.enum
 
 import com.bity.icp_kotlin_kit.data.datasource.api.model.ICPRequestApiModel
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 internal enum class ContentRequestType(val type: String) {
-    @JsonProperty("call") Call("call"),
-    @JsonProperty("query") Query("query"),
-    @JsonProperty("read_state") ReadState("read_state");
+    @SerialName("call") Call("call"),
+    @SerialName("query") Query("query"),
+    @SerialName("read_state") ReadState("read_state");
 
     companion object {
         internal fun fromICPRequestApiModel(request: ICPRequestApiModel): ContentRequestType =

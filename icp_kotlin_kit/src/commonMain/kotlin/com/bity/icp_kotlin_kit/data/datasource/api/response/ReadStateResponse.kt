@@ -1,7 +1,9 @@
 package com.bity.icp_kotlin_kit.data.datasource.api.response
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class ReadStateResponse(
-    @JsonProperty("certificate") val certificate: ByteArray
+    @SerialName("certificate") val certificate: ByteArray
 )
