@@ -37,6 +37,8 @@ navigationRuntime = "2.8.5"
 okio = "3.9.0"
 dateTime = "0.6.0"
 
+cryptography = "0.4.0"
+
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle-version" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
@@ -76,6 +78,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 kotlinx-datetime= { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTime"}
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-version" }
+
+cryptography-core = { module = "dev.whyoleg.cryptography:cryptography-core", version.ref = "cryptography" }
+cryptography-provider-jdk = { module = "dev.whyoleg.cryptography:cryptography-provider-jdk", version.ref = "cryptography" }
 
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]

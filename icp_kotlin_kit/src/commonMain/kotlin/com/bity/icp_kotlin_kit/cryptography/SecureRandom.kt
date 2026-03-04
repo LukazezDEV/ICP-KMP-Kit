@@ -1,3 +1,6 @@
 package com.bity.icp_kotlin_kit.cryptography
 
-internal expect fun secureRandomOfLength(byteLength: Int): ByteArray
+import dev.whyoleg.cryptography.random.CryptographyRandom
+
+internal fun secureRandomOfLength(byteLength: Int): ByteArray
+    = CryptographyRandom.nextBytes(byteLength)

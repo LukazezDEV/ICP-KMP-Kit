@@ -11,6 +11,7 @@ kotlin {
             dependencies {
                 implementation(libs.okio)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.cryptography.core)
             }
         }
         val commonTest by getting
@@ -25,6 +26,7 @@ kotlin {
                 implementation(libs.logging.interceptor)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.cryptography.provider.jdk)
             }
         }
 
