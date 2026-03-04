@@ -10,11 +10,13 @@ fun ByteArray.toShort(): Short =
     ((this[1].toInt() and 0xFF) shl 8 or
             (this[0].toInt() and 0xFF)).toShort()
 
-fun ByteArray.toInt(): Int =
-    (this[3].toInt() and 0xFF shl 24) or
-            (this[2].toInt() and 0xFF shl 16) or
-            (this[1].toInt() and 0xFF shl 8) or
-            (this[0].toInt() and 0xFF)
+fun ByteArray.toInt(): Int {
+    var result = 0
+    for (b in this) {
+        result = (result shl 8) or (b.toInt() and 0xFF)
+    }
+    return result
+}
 
 fun ByteArray?.toLong(): Long =
     if (this == null || this.isEmpty()) 0L

@@ -10,7 +10,7 @@ internal class CandidTypeInt(
     override val isTypeAlias: Boolean = false
 ) : CandidType() {
 
-    override fun getKotlinType(variableName: String?): String = "ICPBigInteger"
+    override fun getKotlinType(variableName: String?): String = "BigInteger"
 
     companion object : ParserNodeDeclaration<CandidTypeInt> by reflective()
 }
