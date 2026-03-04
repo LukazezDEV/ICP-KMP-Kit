@@ -55,3 +55,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         languageVersion = "1.9"
     }
 }
+
+tasks.named<Test>("jvmTest") {
+    useJUnitPlatform()
+}

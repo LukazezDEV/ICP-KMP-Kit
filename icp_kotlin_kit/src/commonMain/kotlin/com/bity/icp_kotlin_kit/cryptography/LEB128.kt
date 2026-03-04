@@ -37,6 +37,10 @@ object LEB128 {
         encodeUnsignedBigInt(value)
 
     private fun encodeUnsignedBigInt(bigInt: ICPBigInteger): ByteArray {
+//        println("encodeUnsignedBigInt called with: $bigInt")
+//        require(bigInt.signum() >= 0) {
+//            "encodeUnsignedBigInt cannot encode negative values: $bigInt"
+//        }
         var value = bigInt
         val bytes = mutableListOf<Byte>()
         val mask7F = ICPBigInteger.valueOf(0x7F)

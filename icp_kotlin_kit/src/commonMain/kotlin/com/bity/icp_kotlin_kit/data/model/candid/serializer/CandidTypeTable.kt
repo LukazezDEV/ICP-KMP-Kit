@@ -69,7 +69,7 @@ internal class CandidTypeTable {
 
     fun encode(): ByteArray =
         LEB128.encodeUnsigned(customTypes.size) +
-                customTypes.map { it.encode() }.joinedData()
+                customTypes.map { it.encode() }.joinedData() //println("CandidTypeTable.encode: customTypes.size=${customTypes.size}")
 
     private fun addOrFind(typeData: CandidTypeData): Int {
         val index = customTypes.indexOfFirst { it == typeData }

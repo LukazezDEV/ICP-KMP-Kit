@@ -75,10 +75,11 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 kotlinx-datetime= { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTime"}
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-version" }
 
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]
-junit-test = ["junit-jupiter-api", "junit-jupiter-params"]
+junit-test = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine"]
 kotlinx-test = ["kotlin-test", "kotlinx-coroutines-test"]
 
 [plugins]

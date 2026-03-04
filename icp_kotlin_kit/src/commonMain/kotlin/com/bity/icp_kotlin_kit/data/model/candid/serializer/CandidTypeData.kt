@@ -13,9 +13,9 @@ internal class CandidTypeData(
 
         fun encode(): ByteArray =
             when(this) {
-                is Signed -> LEB128.encodeSigned(int)
-                is Unsigned -> LEB128.encodeUnsigned(uInt)
-                is Data -> data
+                is Signed -> LEB128.encodeSigned(int) //println("EncodableType.Signed.encode: int=$int")
+                is Unsigned -> LEB128.encodeUnsigned(uInt) //println("EncodableType.Unsigned.encode: uInt=$uInt")
+                is Data -> data //println("EncodableType.Data.encode: size=${data.size}")
             }
 
         // Required by CandidTypeTable::addOrFind
