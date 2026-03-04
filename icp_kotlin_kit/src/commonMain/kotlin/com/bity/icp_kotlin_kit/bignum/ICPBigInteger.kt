@@ -1,6 +1,10 @@
 package com.bity.icp_kotlin_kit.bignum
 
 expect class ICPBigInteger {
+
+    override fun equals(other: Any?): Boolean
+    override fun hashCode(): Int
+
     fun toByteArray(): ByteArray
     fun add(other: ICPBigInteger): ICPBigInteger
     fun subtract(other: ICPBigInteger): ICPBigInteger

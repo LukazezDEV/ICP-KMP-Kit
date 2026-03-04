@@ -4,6 +4,14 @@ import java.math.BigInteger as JBigInteger
 
 actual class ICPBigInteger(private val delegate: JBigInteger) {
 
+    actual override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ICPBigInteger) return false
+        return delegate == other.delegate
+    }
+
+    actual override fun hashCode(): Int = delegate.hashCode()
+
     actual fun toByteArray(): ByteArray = delegate.toByteArray()
 
     actual fun add(other: ICPBigInteger) =
@@ -38,7 +46,6 @@ actual class ICPBigInteger(private val delegate: JBigInteger) {
     actual fun toInt(): Int = delegate.toInt()
     actual fun toLong(): Long = delegate.toLong()
 
-    // ⭐ NEW
     actual fun toFloat(): Float = delegate.toFloat()
     actual fun signum(): Int = delegate.signum()
 
