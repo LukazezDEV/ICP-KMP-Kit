@@ -21,7 +21,7 @@ class KotlinFileGeneratorServiceTest {
     @Test
     fun `parse file`() {
         val fileName = "ICRC1Oracle"
-        val filePath = "src/test/resources/candid_file/$fileName.did"
+        val filePath = "src/jvmTest/resources/candid_file/$fileName.did"
         val candidFileText = File(filePath).readText()
         val generatedKotlinFile = KotlinFileGeneratorService.parseAndGetKotlinFile(
             candidFileText = candidFileText,
