@@ -33,7 +33,7 @@ class KotlinFileGeneratorServiceTest {
 
     @Test
     fun `parse all files`() {
-        val folder = File("src/test/resources/candid_file")
+        val folder = File("src/jvmTest/resources/candid_file")
         folder.listFiles()?.forEach {
             val candidFileText = it.readText()
             val generatedKotlinFile = KotlinFileGeneratorService.parseAndGetKotlinFile(

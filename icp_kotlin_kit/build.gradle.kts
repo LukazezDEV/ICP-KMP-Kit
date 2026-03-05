@@ -62,4 +62,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
+    testLogging {
+        events("failed")
+        showStandardStreams = true
+    }
 }
