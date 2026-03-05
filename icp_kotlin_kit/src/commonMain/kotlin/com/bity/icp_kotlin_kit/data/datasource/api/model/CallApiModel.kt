@@ -14,4 +14,14 @@ internal class CallApiModel(
     @SerialName("method_name") val method_name: String,
     @SerialName("canister_id") val canister_id: ByteArray,
     @SerialName("arg") val arg: ByteArray
-): ContentApiModel()
+): ContentApiModel() {
+    override fun toMap(): Map<String, Any> = mapOf(
+        "request_type" to request_type.type,
+        "sender" to sender,
+        "nonce" to nonce,
+        "ingress_expiry" to ingress_expiry,
+        "method_name" to method_name,
+        "canister_id" to canister_id,
+        "arg" to arg
+    )
+}

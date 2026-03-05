@@ -38,9 +38,9 @@ object LEB128 {
 
     private fun encodeUnsignedBigInt(bigInt: ICPBigInteger): ByteArray {
 //        println("encodeUnsignedBigInt called with: $bigInt")
-//        require(bigInt.signum() >= 0) {
-//            "encodeUnsignedBigInt cannot encode negative values: $bigInt"
-//        }
+        require(bigInt.signum() >= 0) {
+            "encodeUnsignedBigInt cannot encode negative values: $bigInt"
+        }
         var value = bigInt
         val bytes = mutableListOf<Byte>()
         val mask7F = ICPBigInteger.valueOf(0x7F)
@@ -164,7 +164,6 @@ object LEB128 {
             Short::class -> result.toShort()
             Int::class -> result.toInt()
             Long::class -> result.toLong()
-            Float::class -> result.toFloat()
             ICPBigInteger::class -> result
             else -> throw IllegalArgumentException("Unsupported type: ${T::class.simpleName}")
         } as T

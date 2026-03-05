@@ -1,5 +1,6 @@
 package com.bity.icp_kotlin_kit.util
 
+import com.bity.icp_kotlin_kit.cryptography.OrderIndependentHash
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

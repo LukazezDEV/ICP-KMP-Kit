@@ -11,4 +11,12 @@ internal class ReadStateApiModel(
     @SerialName("nonce") override val nonce: ByteArray,
     @SerialName("ingress_expiry") override val ingress_expiry: Long,
     @SerialName("paths") val paths: List<List<ByteArray>>
-): ContentApiModel()
+): ContentApiModel() {
+    override fun toMap(): Map<String, Any> = mapOf(
+        "request_type" to request_type.type,
+        "sender" to sender,
+        "nonce" to nonce,
+        "ingress_expiry" to ingress_expiry,
+        "paths" to paths
+    )
+}
