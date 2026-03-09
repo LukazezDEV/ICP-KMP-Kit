@@ -86,6 +86,6 @@ sealed class HashTreeNode {
 
     companion object {
         fun labeled(string: String, node: HashTreeNode): HashTreeNode =
-            Labeled(string.toByteArray(Charsets.UTF_8), node)
+            Labeled(string.encodeToByteArray(), node)
     }
 }

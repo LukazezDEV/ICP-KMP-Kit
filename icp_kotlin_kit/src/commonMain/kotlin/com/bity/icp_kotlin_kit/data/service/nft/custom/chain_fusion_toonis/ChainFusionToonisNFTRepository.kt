@@ -98,7 +98,7 @@ class ChainFusionToonisNFTRepository(
 
     private fun ChainFusionToonis.Metadata__1.getICPNFTEXTMetadata() : ICPNFTEXTMetadata? {
         val metadata = (this as? ChainFusionToonis.Metadata__1.nonfungible)?.metadata ?: return null
-        val jsonContent = metadata.toString(Charsets.UTF_8)
+        val jsonContent = metadata.decodeToString()
         try {
             val nonFungibleMetadata = json.decodeFromString<ChainFusionToonisNonFungibleMetadata>(jsonContent)
             return ICPNFTEXTMetadata(

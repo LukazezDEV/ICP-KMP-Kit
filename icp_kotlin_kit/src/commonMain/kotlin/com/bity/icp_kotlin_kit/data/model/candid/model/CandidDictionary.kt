@@ -41,7 +41,7 @@ internal class CandidDictionary(
         // https://github.com/dfinity/candid/blob/master/spec/Candid.md
         // hash(id) = ( Sum(i=0..k) utf8(id)[i] * 223^(k-i) ) mod 2^32 where k = |utf8(id)|-1
         fun hash(key: String): ULong {
-            val data = key.toByteArray(Charsets.UTF_8)
+            val data = key.encodeToByteArray()
             return data.fold(0UL) { acc, byte ->
                 (acc * 223.toULong() + byte.toUByte()) and 0x00000000ffffffff.toULong()
             }

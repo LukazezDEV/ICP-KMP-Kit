@@ -14,7 +14,7 @@ sealed class ICPStateTreePathComponentApiModel(
     fun encoded(): ByteArray =
         when(this) {
             is DataApiModel -> this.data
-            is StringApiModel -> this.string.toByteArray(Charsets.UTF_8)
+            is StringApiModel -> this.string.encodeToByteArray()
         }
 
     override fun equals(other: Any?): Boolean {

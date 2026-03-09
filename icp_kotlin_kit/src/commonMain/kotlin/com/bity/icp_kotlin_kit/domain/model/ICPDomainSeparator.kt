@@ -6,7 +6,7 @@ internal class ICPDomainSeparator(
     val domain: String
 ) {
     val data: ByteArray = LEB128.encodeUnsigned(domain.length) +
-            domain.toByteArray(Charsets.UTF_8)
+            domain.encodeToByteArray()
 
     fun domainSeparatedData(data: ByteArray): ByteArray =
         this.data + data
