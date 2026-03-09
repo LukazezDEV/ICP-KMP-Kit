@@ -218,6 +218,6 @@ internal object CandidDeserializer {
     fun readString(source: BufferedSource): String {
         val length = LEB128.decodeUnsigned<Int>(source)
         val bytes = source.readByteArray(length.toLong())
-        return bytes.toString(Charsets.UTF_8)
+        return bytes.decodeToString()
     }
 }

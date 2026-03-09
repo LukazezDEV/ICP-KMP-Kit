@@ -111,7 +111,7 @@ internal sealed class CandidEncodableValue {
                 if(serviceMethod == null) {
                     byteArrayOf(0x00)
                 } else {
-                    val methodName = serviceMethod.name.toByteArray(Charsets.UTF_8)
+                    val methodName = serviceMethod.name.encodeToByteArray()
                     byteArrayOf(0x01) +
                             encodeUnsigned(serviceMethod.principal.bytes.size) +
                             serviceMethod.principal.bytes +
@@ -139,7 +139,7 @@ internal sealed class CandidEncodableValue {
             is Record -> values.map { it.value.encodeValue() }.joinedData()
             Reserved -> byteArrayOf()
             is Text -> {
-                val utf8 = string.toByteArray(Charsets.UTF_8)
+                val utf8 = string.encodeToByteArray()
                 encodeUnsigned(utf8.size) + utf8
             }
             is Variant ->
