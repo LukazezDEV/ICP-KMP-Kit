@@ -21,9 +21,9 @@ kotlinx-coroutines-version = "1.7.3"
 serialization = "1.6.3"
 
 agp = "8.11.1"
-kotlin = "1.9.0"
+kotlin = "2.1.0"
+jetbrainsKotlinJvm = "2.1.0"
 coreKtx = "1.15.0"
-jetbrainsKotlinJvm = "1.9.0"
 uiToolingPreviewAndroid = "1.7.6"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
@@ -38,6 +38,7 @@ okio = "3.9.0"
 dateTime = "0.6.0"
 
 cryptography = "0.4.0"
+secp256k1 = "0.22.0"
 
 [libraries]
 bouncycastle = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle-version" }
@@ -82,6 +83,9 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 cryptography-core = { module = "dev.whyoleg.cryptography:cryptography-core", version.ref = "cryptography" }
 cryptography-provider-jdk = { module = "dev.whyoleg.cryptography:cryptography-provider-jdk", version.ref = "cryptography" }
 
+kmp-secp256k1 = { module = "fr.acinq.secp256k1:secp256k1-kmp", version.ref = "secp256k1" }
+kmp-jvm-secp256k1 = { module = "fr.acinq.secp256k1:secp256k1-kmp-jni-jvm", version.ref = "secp256k1" }
+
 [bundles]
 http = ["retrofit-core", "jackson-dataformat-cbor", "jackson-module-kotlin", "retrofit-converter"]
 junit-test = ["junit-jupiter-api", "junit-jupiter-params", "junit-jupiter-engine"]
@@ -91,6 +95,9 @@ kotlinx-test = ["kotlin-test", "kotlinx-coroutines-test"]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

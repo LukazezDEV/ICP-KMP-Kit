@@ -17,6 +17,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.cryptography.core)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kmp.secp256k1)
             }
         }
         val commonTest by getting
@@ -32,6 +33,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.cryptography.provider.jdk)
+                implementation(libs.kmp.jvm.secp256k1)
             }
         }
 
@@ -59,7 +61,6 @@ publishing {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "11"
-        languageVersion = "1.9"
     }
 }
 
