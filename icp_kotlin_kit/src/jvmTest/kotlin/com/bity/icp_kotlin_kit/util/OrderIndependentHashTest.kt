@@ -15,14 +15,8 @@ class OrderIndependentHashTest {
         value: Any,
         expectedResult: String
     ) {
-//        val actual = OrderIndependentHash(value).toHexString()
-//
-//        println("DEBUG value    = $value")
-//        println("DEBUG actual   = $actual")
-//        println("DEBUG expected = $expectedResult")
-//        assertEquals(expectedResult, actual)
-
-        assertEquals(expectedResult, value)
+        val actual = OrderIndependentHash(value).toHexString()
+        assertEquals(expectedResult, actual)
     }
 
     companion object {
